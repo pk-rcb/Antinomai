@@ -43,7 +43,6 @@ st.markdown("""
 html, body, [class*="css"] { font-family: 'Inter', sans-serif !important; }
 #MainMenu, footer, header { visibility: hidden; }
 .stApp { background-color: #0f1117; }
-section[data-testid="stSidebar"] { background-color: #161b27; }
 .hitl-box {
     border: 1px solid #b45309; border-radius: 8px;
     padding: 0.9rem 1.1rem; background: rgba(251,191,36,0.04); margin-bottom: 0.75rem;
@@ -634,11 +633,11 @@ def _build_app():
 _app = _build_app()
 
 # ==========================================
-# 7. STREAMLIT UI — CLEAN & SIMPLE
+# 7. STREAMLIT UI
 # ==========================================
 
 st.title("Antinomai")
-st.caption("Institutional Multi-Agent Research Platform")
+st.caption("Institutional Multi-Agent Research Platform · LangGraph MAS")
 st.divider()
 
 # --- Session State ---
@@ -656,46 +655,41 @@ for k, v in _defaults.items():
         st.session_state[k] = v
 
 # ==========================================
-# SIDEBAR
+# TOP CONTROLS ROW  (replaces sidebar — works on Streamlit Cloud)
 # ==========================================
-with st.sidebar:
-    st.header("Controls")
+col_left, col_mid, col_right = st.columns([2, 2, 1])
 
-    # Chart upload
-    st.subheader("Chart Upload")
-    uploaded_file = st.file_uploader(
-        "Upload candlestick chart (JPG/PNG) then type 'analyze this chart'",
-        type=["jpg", "jpeg", "png"],
-        label_visibility="collapsed",
-    )
-    if uploaded_file:
-        st.image(uploaded_file, caption="Chart ready", use_container_width=True)
-
-    st.divider()
-
-    # Debate settings
-    st.subheader("Debate Panel")
+with col_left:
     st.session_state.enable_sentiment_check = st.toggle(
-        "Live Sentiment Cross-check (+5-8s)",
+        "Live Sentiment Cross-check",
         value=st.session_state.enable_sentiment_check,
-        help="Adds a Tavily search to cross-verify social/analyst sentiment vs corporate disclosures.",
+        help="Adds Tavily social/analyst sentiment layer to Debate Panel (+5-8s latency).",
     )
 
-    st.divider()
-
-    # Status
+with col_mid:
     if st.session_state.last_route:
         st.caption(f"Last route: **{st.session_state.last_route.upper()}**")
 
-    # Clear
-    if st.button("Clear Conversation", use_container_width=True):
+with col_right:
+    if st.button("Clear Chat", use_container_width=True):
         for k in ["messages", "last_route", "portfolio_df_data", "portfolio_total", "portfolio_beta"]:
             st.session_state[k] = _defaults.get(k)
         st.session_state["session_id"] = hashlib.md5(str(time.time()).encode()).hexdigest()[:10]
         st.rerun()
 
-    st.divider()
-    st.caption("Routes: Debate | Vision | Trivia | Fundamental | Portfolio")
+# ==========================================
+# FILE UPLOADER  (chart vision — inline expander)
+# ==========================================
+with st.expander("Upload Chart for Vision Analysis", expanded=False):
+    uploaded_file = st.file_uploader(
+        "Upload a candlestick chart (JPG/PNG), then type 'analyze this chart' below.",
+        type=["jpg", "jpeg", "png"],
+    )
+    if uploaded_file:
+        st.image(uploaded_file, caption="Chart ready — type 'analyze this chart' in the chat.", width=400)
+
+st.divider()
+
 
 # ==========================================
 # CHAT HISTORY
