@@ -247,7 +247,7 @@ def trivia_node(state: ApplicationState):
 
 def vision_node(state: ApplicationState):
     messages   = state["messages"]
-    vision_llm = ChatGroq(model="meta-llama/llama-4-scout-17b-16e-instruct", temperature=0.1)
+    vision_llm = ChatGroq(model="qwen/qwen3.6-27b", temperature=0.1)
     sys_msg    = SystemMessage(content="""You are an expert technical stock analyst.
 Analyze the provided stock chart image and respond with:
 1. **Overall Trend** - Bullish / Bearish / Sideways with reasoning
