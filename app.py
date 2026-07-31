@@ -246,8 +246,14 @@ def trivia_node(state: ApplicationState):
 
 
 def vision_node(state: ApplicationState):
+    import re
     messages   = state["messages"]
-    vision_llm = ChatGroq(model="qwen/qwen3.6-27b", temperature=0.1)
+    # reasoning_effort="none" disables Qwen3's thinking/chain-of-thought mode
+    vision_llm = ChatGroq(
+        model="qwen/qwen3.6-27b",
+        temperature=0.1,
+        model_kwargs={"reasoning_effort": "none"},
+    )
     sys_msg    = SystemMessage(content="""You are an expert technical stock analyst.
 Analyze the provided stock chart image and respond with:
 1. **Overall Trend** - Bullish / Bearish / Sideways with reasoning
@@ -260,10 +266,11 @@ respond ONLY with: "Unresolved Technical Trend: Image lacks sufficient contrast 
 Do NOT fabricate analysis from unclear images.""")
     try:
         response = vision_llm.invoke([sys_msg] + messages)
-        content  = (response.content or "").strip()
+        # Strip any residual <think>...</think> blocks (safety net)
+        content  = re.sub(r"<think>.*?</think>", "", response.content or "", flags=re.DOTALL).strip()
         if len(content) < 60:
             return {"messages": messages + [AIMessage(content="Unresolved Technical Trend: Image lacks sufficient contrast or chart indicators. Please upload a clearer candlestick chart.")]}
-        return {"messages": messages + [response]}
+        return {"messages": messages + [AIMessage(content=content)]}
     except Exception as e:
         return {"messages": messages + [AIMessage(content=f"Vision Agent Error: {e}")]}
 
