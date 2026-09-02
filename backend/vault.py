@@ -133,16 +133,24 @@ def _embed_texts(texts: list[str]) -> list[list[float]]:
     hf_token = os.environ.get("HF_TOKEN")
     
     if hf_token:
-        from chromadb.utils.embedding_functions import HuggingFaceEmbeddingFunction
-        embed_fn = HuggingFaceEmbeddingFunction(
-            api_key=hf_token,
-            model_name="sentence-transformers/all-MiniLM-L6-v2"
-        )
+        import requests
+        url = "https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2"
+        headers = {"Authorization": f"Bearer {hf_token.strip()}"}
+        try:
+            print(f"[Vault] Requesting HF embeddings for {len(texts)} chunks...")
+            res = requests.post(url, headers=headers, json={"inputs": texts, "options": {"wait_for_model": True}}, timeout=30)
+            res.raise_for_status()
+            embeddings = res.json()
+            if not isinstance(embeddings, list) or not all(isinstance(x, list) for x in embeddings):
+                raise ValueError(f"Unexpected HF response: {embeddings}")
+            return embeddings
+        except Exception as e:
+            print(f"[Vault] HF API Error: {type(e).__name__}: {e}")
+            raise RuntimeError(f"HF API Failed: {e}")
     else:
         from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
         embed_fn = DefaultEmbeddingFunction()
-        
-    return [list(e) for e in embed_fn(texts)]
+        return [list(e) for e in embed_fn(texts)]
 
 
 # ── Backend selector ──────────────────────────────────────────────────────────
