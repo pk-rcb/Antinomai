@@ -76,11 +76,19 @@ def _get_chroma_collection():
     global _chroma_collection
     if _chroma_collection is None:
         import chromadb
-        from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
+        import os
 
-        # DefaultEmbeddingFunction uses all-MiniLM-L6-v2 via ONNX Runtime
-        # No PyTorch dependency — safe on free-tier cloud hosts (512MB RAM)
-        embed_fn = DefaultEmbeddingFunction()
+        hf_token = os.environ.get("HF_TOKEN")
+        if hf_token:
+            from chromadb.utils.embedding_functions import HuggingFaceEmbeddingFunction
+            embed_fn = HuggingFaceEmbeddingFunction(
+                api_key=hf_token,
+                model_name="sentence-transformers/all-MiniLM-L6-v2"
+            )
+        else:
+            from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
+            embed_fn = DefaultEmbeddingFunction()
+
         db_path  = os.path.join(os.path.dirname(__file__), "..", "chroma_db")
         client   = chromadb.PersistentClient(path=db_path)
         _chroma_collection = client.get_or_create_collection(
@@ -120,10 +128,20 @@ def _get_qdrant_collection():
 
 
 def _embed_texts(texts: list[str]) -> list[list[float]]:
-    """Embed using ONNX (always local, no API cost)."""
-    from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
-    embed_fn = DefaultEmbeddingFunction()
-    # DefaultEmbeddingFunction returns list of embeddings directly
+    """Embed using HF API (if token provided) or fallback to local ONNX."""
+    import os
+    hf_token = os.environ.get("HF_TOKEN")
+    
+    if hf_token:
+        from chromadb.utils.embedding_functions import HuggingFaceEmbeddingFunction
+        embed_fn = HuggingFaceEmbeddingFunction(
+            api_key=hf_token,
+            model_name="sentence-transformers/all-MiniLM-L6-v2"
+        )
+    else:
+        from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
+        embed_fn = DefaultEmbeddingFunction()
+        
     return [list(e) for e in embed_fn(texts)]
 
 
