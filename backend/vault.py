@@ -134,7 +134,7 @@ def _embed_texts(texts: list[str]) -> list[list[float]]:
     
     if hf_token:
         import requests
-        url = "https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2"
+        url = "https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2"
         headers = {"Authorization": f"Bearer {hf_token.strip()}"}
         try:
             print(f"[Vault] Requesting HF embeddings for {len(texts)} chunks...")
