@@ -1,0 +1,302 @@
+[
+  {
+    "id": "USD_01",
+    "type": "USD",
+    "query": "I have 100 AAPL, 50 MSFT, 200 TSLA",
+    "holdings": [
+      {"ticker": "AAPL", "shares": 100},
+      {"ticker": "MSFT", "shares": 50},
+      {"ticker": "TSLA", "shares": 200}
+    ]
+  },
+  {
+    "id": "USD_02",
+    "type": "USD",
+    "query": "I own 80 GOOGL, 120 AMZN, 30 NVDA",
+    "holdings": [
+      {"ticker": "GOOGL", "shares": 80},
+      {"ticker": "AMZN", "shares": 120},
+      {"ticker": "NVDA", "shares": 30}
+    ]
+  },
+  {
+    "id": "USD_03",
+    "type": "USD",
+    "query": "Portfolio: 500 META, 200 NFLX, 150 AMD",
+    "holdings": [
+      {"ticker": "META", "shares": 500},
+      {"ticker": "NFLX", "shares": 200},
+      {"ticker": "AMD", "shares": 150}
+    ]
+  },
+  {
+    "id": "USD_04",
+    "type": "USD",
+    "query": "I hold 300 JPM, 400 BAC, 100 GS",
+    "holdings": [
+      {"ticker": "JPM", "shares": 300},
+      {"ticker": "BAC", "shares": 400},
+      {"ticker": "GS", "shares": 100}
+    ]
+  },
+  {
+    "id": "USD_05",
+    "type": "USD",
+    "query": "I have 60 BRK-B, 90 WMT, 110 KO",
+    "holdings": [
+      {"ticker": "BRK-B", "shares": 60},
+      {"ticker": "WMT", "shares": 90},
+      {"ticker": "KO", "shares": 110}
+    ]
+  },
+  {
+    "id": "USD_06",
+    "type": "USD",
+    "query": "My portfolio: 250 XOM, 180 CVX, 400 PFE",
+    "holdings": [
+      {"ticker": "XOM", "shares": 250},
+      {"ticker": "CVX", "shares": 180},
+      {"ticker": "PFE", "shares": 400}
+    ]
+  },
+  {
+    "id": "USD_07",
+    "type": "USD",
+    "query": "Holdings: 75 ORCL, 200 INTC, 50 IBM",
+    "holdings": [
+      {"ticker": "ORCL", "shares": 75},
+      {"ticker": "INTC", "shares": 200},
+      {"ticker": "IBM", "shares": 50}
+    ]
+  },
+  {
+    "id": "USD_08",
+    "type": "USD",
+    "query": "I own 1000 F, 300 GM, 500 UBER",
+    "holdings": [
+      {"ticker": "F", "shares": 1000},
+      {"ticker": "GM", "shares": 300},
+      {"ticker": "UBER", "shares": 500}
+    ]
+  },
+  {
+    "id": "USD_09",
+    "type": "USD",
+    "query": "I have 40 AMGN, 60 GILD, 120 BMY",
+    "holdings": [
+      {"ticker": "AMGN", "shares": 40},
+      {"ticker": "GILD", "shares": 60},
+      {"ticker": "BMY", "shares": 120}
+    ]
+  },
+  {
+    "id": "USD_10",
+    "type": "USD",
+    "query": "My holdings: 350 T, 200 VZ, 80 DIS",
+    "holdings": [
+      {"ticker": "T", "shares": 350},
+      {"ticker": "VZ", "shares": 200},
+      {"ticker": "DIS", "shares": 80}
+    ]
+  },
+  {
+    "id": "INR_01",
+    "type": "INR",
+    "query": "I own 500 TCS, 200 INFY, 100 RELIANCE shares",
+    "holdings": [
+      {"ticker": "TCS.NS", "shares": 500},
+      {"ticker": "INFY.NS", "shares": 200},
+      {"ticker": "RELIANCE.NS", "shares": 100}
+    ]
+  },
+  {
+    "id": "INR_02",
+    "type": "INR",
+    "query": "Holdings: 300 HDFCBANK, 150 ICICIBANK, 400 SBIN",
+    "holdings": [
+      {"ticker": "HDFCBANK.NS", "shares": 300},
+      {"ticker": "ICICIBANK.NS", "shares": 150},
+      {"ticker": "SBIN.NS", "shares": 400}
+    ]
+  },
+  {
+    "id": "INR_03",
+    "type": "INR",
+    "query": "I have 250 WIPRO, 180 HCLTECH, 320 TECHM",
+    "holdings": [
+      {"ticker": "WIPRO.NS", "shares": 250},
+      {"ticker": "HCLTECH.NS", "shares": 180},
+      {"ticker": "TECHM.NS", "shares": 320}
+    ]
+  },
+  {
+    "id": "INR_04",
+    "type": "INR",
+    "query": "My portfolio: 600 TATAMOTORS, 400 MARUTI, 50 EICHERMOT",
+    "holdings": [
+      {"ticker": "TATAMOTORS.NS", "shares": 600},
+      {"ticker": "MARUTI.NS", "shares": 400},
+      {"ticker": "EICHERMOT.NS", "shares": 50}
+    ]
+  },
+  {
+    "id": "INR_05",
+    "type": "INR",
+    "query": "I own 200 HINDUNILVR, 350 ITC, 120 NESTLEIND",
+    "holdings": [
+      {"ticker": "HINDUNILVR.NS", "shares": 200},
+      {"ticker": "ITC.NS", "shares": 350},
+      {"ticker": "NESTLEIND.NS", "shares": 120}
+    ]
+  },
+  {
+    "id": "INR_06",
+    "type": "INR",
+    "query": "Holdings: 1000 POWERGRID, 800 NTPC, 500 BPCL",
+    "holdings": [
+      {"ticker": "POWERGRID.NS", "shares": 1000},
+      {"ticker": "NTPC.NS", "shares": 800},
+      {"ticker": "BPCL.NS", "shares": 500}
+    ]
+  },
+  {
+    "id": "INR_07",
+    "type": "INR",
+    "query": "I have 90 BAJAJFINSV, 60 BAJFINANCE, 200 HDFC",
+    "holdings": [
+      {"ticker": "BAJAJFINSV.NS", "shares": 90},
+      {"ticker": "BAJFINANCE.NS", "shares": 60},
+      {"ticker": "HDFC.NS", "shares": 200}
+    ]
+  },
+  {
+    "id": "INR_08",
+    "type": "INR",
+    "query": "My shares: 400 COALINDIA, 300 ONGC, 150 GAIL",
+    "holdings": [
+      {"ticker": "COALINDIA.NS", "shares": 400},
+      {"ticker": "ONGC.NS", "shares": 300},
+      {"ticker": "GAIL.NS", "shares": 150}
+    ]
+  },
+  {
+    "id": "INR_09",
+    "type": "INR",
+    "query": "Portfolio: 700 ADANIENT, 200 ADANIPORTS, 100 ADANIGREEN",
+    "holdings": [
+      {"ticker": "ADANIENT.NS", "shares": 700},
+      {"ticker": "ADANIPORTS.NS", "shares": 200},
+      {"ticker": "ADANIGREEN.NS", "shares": 100}
+    ]
+  },
+  {
+    "id": "INR_10",
+    "type": "INR",
+    "query": "I hold 500 SUNPHARMA, 300 DRREDDY, 200 CIPLA",
+    "holdings": [
+      {"ticker": "SUNPHARMA.NS", "shares": 500},
+      {"ticker": "DRREDDY.NS", "shares": 300},
+      {"ticker": "CIPLA.NS", "shares": 200}
+    ]
+  },
+  {
+    "id": "MIX_01",
+    "type": "MIXED",
+    "query": "I have 50 AAPL, 200 TCS, 100 INFY shares",
+    "holdings": [
+      {"ticker": "AAPL", "shares": 50},
+      {"ticker": "TCS.NS", "shares": 200},
+      {"ticker": "INFY.NS", "shares": 100}
+    ]
+  },
+  {
+    "id": "MIX_02",
+    "type": "MIXED",
+    "query": "Portfolio: 80 MSFT, 300 RELIANCE, 150 HDFCBANK",
+    "holdings": [
+      {"ticker": "MSFT", "shares": 80},
+      {"ticker": "RELIANCE.NS", "shares": 300},
+      {"ticker": "HDFCBANK.NS", "shares": 150}
+    ]
+  },
+  {
+    "id": "MIX_03",
+    "type": "MIXED",
+    "query": "I own 30 NVDA, 500 WIPRO, 200 ICICIBANK",
+    "holdings": [
+      {"ticker": "NVDA", "shares": 30},
+      {"ticker": "WIPRO.NS", "shares": 500},
+      {"ticker": "ICICIBANK.NS", "shares": 200}
+    ]
+  },
+  {
+    "id": "MIX_04",
+    "type": "MIXED",
+    "query": "My holdings: 100 GOOGL, 400 TATAMOTORS, 300 SBIN",
+    "holdings": [
+      {"ticker": "GOOGL", "shares": 100},
+      {"ticker": "TATAMOTORS.NS", "shares": 400},
+      {"ticker": "SBIN.NS", "shares": 300}
+    ]
+  },
+  {
+    "id": "MIX_05",
+    "type": "MIXED",
+    "query": "I hold 200 META, 600 ITC, 250 HINDUNILVR",
+    "holdings": [
+      {"ticker": "META", "shares": 200},
+      {"ticker": "ITC.NS", "shares": 600},
+      {"ticker": "HINDUNILVR.NS", "shares": 250}
+    ]
+  },
+  {
+    "id": "MIX_06",
+    "type": "MIXED",
+    "query": "Portfolio: 150 AMZN, 700 NTPC, 400 BPCL",
+    "holdings": [
+      {"ticker": "AMZN", "shares": 150},
+      {"ticker": "NTPC.NS", "shares": 700},
+      {"ticker": "BPCL.NS", "shares": 400}
+    ]
+  },
+  {
+    "id": "MIX_07",
+    "type": "MIXED",
+    "query": "I have 40 JPM, 500 SUNPHARMA, 100 DRREDDY",
+    "holdings": [
+      {"ticker": "JPM", "shares": 40},
+      {"ticker": "SUNPHARMA.NS", "shares": 500},
+      {"ticker": "DRREDDY.NS", "shares": 100}
+    ]
+  },
+  {
+    "id": "MIX_08",
+    "type": "MIXED",
+    "query": "Holdings: 250 TSLA, 300 BAJAJFINSV, 80 BAJFINANCE",
+    "holdings": [
+      {"ticker": "TSLA", "shares": 250},
+      {"ticker": "BAJAJFINSV.NS", "shares": 300},
+      {"ticker": "BAJFINANCE.NS", "shares": 80}
+    ]
+  },
+  {
+    "id": "MIX_09",
+    "type": "MIXED",
+    "query": "I own 120 XOM, 800 COALINDIA, 200 ONGC",
+    "holdings": [
+      {"ticker": "XOM", "shares": 120},
+      {"ticker": "COALINDIA.NS", "shares": 800},
+      {"ticker": "ONGC.NS", "shares": 200}
+    ]
+  },
+  {
+    "id": "MIX_10",
+    "type": "MIXED",
+    "query": "My portfolio: 60 DIS, 1000 POWERGRID, 500 ADANIENT",
+    "holdings": [
+      {"ticker": "DIS", "shares": 60},
+      {"ticker": "POWERGRID.NS", "shares": 1000},
+      {"ticker": "ADANIENT.NS", "shares": 500}
+    ]
+  }
+]

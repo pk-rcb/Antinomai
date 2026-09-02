@@ -1,0 +1,1352 @@
+[
+  {
+    "id": "USD_01",
+    "type": "USD",
+    "query": "I have 100 AAPL, 50 MSFT, 200 TSLA",
+    "llm_response": {
+      "total_usd": 114351.0,
+      "wtd_beta": 1.13,
+      "assets": [
+        {
+          "ticker": "AAPL",
+          "shares": 100,
+          "price": 145.0,
+          "currency": "USD",
+          "price_usd": 145.0,
+          "value_usd": 14500.0,
+          "weight_pct": 12.68,
+          "beta": 1.2,
+          "vol_ann": 25.1
+        },
+        {
+          "ticker": "MSFT",
+          "shares": 50,
+          "price": 250.0,
+          "currency": "USD",
+          "price_usd": 250.0,
+          "value_usd": 12500.0,
+          "weight_pct": 10.94,
+          "beta": 0.9,
+          "vol_ann": 22.5
+        },
+        {
+          "ticker": "TSLA",
+          "shares": 200,
+          "price": 275.0,
+          "currency": "USD",
+          "price_usd": 275.0,
+          "value_usd": 55000.0,
+          "weight_pct": 48.09,
+          "beta": 2.1,
+          "vol_ann": 55.6
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "USD_02",
+    "type": "USD",
+    "query": "I own 80 GOOGL, 120 AMZN, 30 NVDA",
+    "llm_response": {
+      "total_usd": 43191.6,
+      "wtd_beta": 1.144,
+      "assets": [
+        {
+          "ticker": "GOOGL",
+          "shares": 80,
+          "price": 95.0,
+          "currency": "USD",
+          "price_usd": 95.0,
+          "value_usd": 7600.0,
+          "weight_pct": 17.59,
+          "beta": 1.13,
+          "vol_ann": 24.21
+        },
+        {
+          "ticker": "AMZN",
+          "shares": 120,
+          "price": 178.0,
+          "currency": "USD",
+          "price_usd": 178.0,
+          "value_usd": 21360.0,
+          "weight_pct": 49.43,
+          "beta": 1.26,
+          "vol_ann": 30.15
+        },
+        {
+          "ticker": "NVDA",
+          "shares": 30,
+          "price": 381.0,
+          "currency": "USD",
+          "price_usd": 381.0,
+          "value_usd": 11430.0,
+          "weight_pct": 32.98,
+          "beta": 1.23,
+          "vol_ann": 41.19
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "USD_03",
+    "type": "USD",
+    "query": "Portfolio: 500 META, 200 NFLX, 150 AMD",
+    "llm_response": {
+      "total_usd": 113215.0,
+      "wtd_beta": 1.23,
+      "assets": [
+        {
+          "ticker": "META",
+          "shares": 500,
+          "price": 274.0,
+          "currency": "USD",
+          "price_usd": 274.0,
+          "value_usd": 137000.0,
+          "weight_pct": 60.83,
+          "beta": 1.28,
+          "vol_ann": 35.0
+        },
+        {
+          "ticker": "NFLX",
+          "shares": 200,
+          "price": 433.0,
+          "currency": "USD",
+          "price_usd": 433.0,
+          "value_usd": 86600.0,
+          "weight_pct": 30.51,
+          "beta": 0.95,
+          "vol_ann": 40.0
+        },
+        {
+          "ticker": "AMD",
+          "shares": 150,
+          "price": 79.0,
+          "currency": "USD",
+          "price_usd": 79.0,
+          "value_usd": 11850.0,
+          "weight_pct": 8.66,
+          "beta": 1.74,
+          "vol_ann": 55.0
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "USD_04",
+    "type": "USD",
+    "query": "I hold 300 JPM, 400 BAC, 100 GS",
+    "llm_response": {
+      "total_usd": 54191.0,
+      "wtd_beta": 1.23,
+      "assets": [
+        {
+          "ticker": "JPM",
+          "shares": 300,
+          "price": 140.0,
+          "currency": "USD",
+          "price_usd": 140.0,
+          "value_usd": 42000.0,
+          "weight_pct": 77.53,
+          "beta": 1.2,
+          "vol_ann": 23.0
+        },
+        {
+          "ticker": "BAC",
+          "shares": 400,
+          "price": 30.0,
+          "currency": "USD",
+          "price_usd": 30.0,
+          "value_usd": 12000.0,
+          "weight_pct": 22.14,
+          "beta": 1.4,
+          "vol_ann": 28.0
+        },
+        {
+          "ticker": "GS",
+          "shares": 100,
+          "price": 350.0,
+          "currency": "USD",
+          "price_usd": 350.0,
+          "value_usd": 3500.0,
+          "weight_pct": 0.33,
+          "beta": 1.1,
+          "vol_ann": 25.0
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "USD_05",
+    "type": "USD",
+    "query": "I have 60 BRK-B, 90 WMT, 110 KO",
+    "llm_response": {
+      "total_usd": 31415.5,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "BRK-B",
+          "shares": 60,
+          "price": 294.41,
+          "currency": "USD",
+          "price_usd": 294.41,
+          "value_usd": 17665.0,
+          "weight_pct": 56.23,
+          "beta": 0.77,
+          "vol_ann": 18.21
+        },
+        {
+          "ticker": "WMT",
+          "shares": 90,
+          "price": 143.21,
+          "currency": "USD",
+          "price_usd": 143.21,
+          "value_usd": 12878.9,
+          "weight_pct": 40.95,
+          "beta": 0.74,
+          "vol_ann": 22.15
+        },
+        {
+          "ticker": "KO",
+          "shares": 110,
+          "price": 59.21,
+          "currency": "USD",
+          "price_usd": 59.21,
+          "value_usd": 6511.1,
+          "weight_pct": 20.71,
+          "beta": 0.96,
+          "vol_ann": 15.61
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "USD_06",
+    "type": "USD",
+    "query": "My portfolio: 250 XOM, 180 CVX, 400 PFE",
+    "llm_response": {
+      "total_usd": 34115.0,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "XOM",
+          "shares": 250,
+          "price": 85.0,
+          "currency": "USD",
+          "price_usd": 85.0,
+          "value_usd": 21250.0,
+          "weight_pct": 62.23,
+          "beta": 0.75,
+          "vol_ann": 21.11
+        },
+        {
+          "ticker": "CVX",
+          "shares": 180,
+          "price": 157.0,
+          "currency": "USD",
+          "price_usd": 157.0,
+          "value_usd": 28260.0,
+          "weight_pct": 82.83,
+          "beta": 0.95,
+          "vol_ann": 24.19
+        },
+        {
+          "ticker": "PFE",
+          "shares": 400,
+          "price": 39.0,
+          "currency": "USD",
+          "price_usd": 39.0,
+          "value_usd": 15600.0,
+          "weight_pct": 45.69,
+          "beta": 0.58,
+          "vol_ann": 18.29
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "USD_07",
+    "type": "USD",
+    "query": "Holdings: 75 ORCL, 200 INTC, 50 IBM",
+    "llm_response": {
+      "total_usd": 31415.0,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "ORCL",
+          "shares": 75,
+          "price": 80.0,
+          "currency": "USD",
+          "price_usd": 80.0,
+          "value_usd": 6000.0,
+          "weight_pct": 19.08,
+          "beta": 0.95,
+          "vol_ann": 22.0
+        },
+        {
+          "ticker": "INTC",
+          "shares": 200,
+          "price": 28.5,
+          "currency": "USD",
+          "price_usd": 28.5,
+          "value_usd": 5700.0,
+          "weight_pct": 18.12,
+          "beta": 0.85,
+          "vol_ann": 25.0
+        },
+        {
+          "ticker": "IBM",
+          "shares": 50,
+          "price": 135.0,
+          "currency": "USD",
+          "price_usd": 135.0,
+          "value_usd": 6750.0,
+          "weight_pct": 21.46,
+          "beta": 0.75,
+          "vol_ann": 18.0
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "USD_08",
+    "type": "USD",
+    "query": "I own 1000 F, 300 GM, 500 UBER",
+    "llm_response": {
+      "total_usd": 113415.0,
+      "wtd_beta": 1.23,
+      "assets": [
+        {
+          "ticker": "F",
+          "shares": 1000,
+          "price": 18.0,
+          "currency": "USD",
+          "price_usd": 18.0,
+          "value_usd": 18000.0,
+          "weight_pct": 15.86,
+          "beta": 1.21,
+          "vol_ann": 25.1
+        },
+        {
+          "ticker": "GM",
+          "shares": 300,
+          "price": 55.0,
+          "currency": "USD",
+          "price_usd": 55.0,
+          "value_usd": 16500.0,
+          "weight_pct": 14.56,
+          "beta": 1.35,
+          "vol_ann": 22.5
+        },
+        {
+          "ticker": "UBER",
+          "shares": 500,
+          "price": 31.0,
+          "currency": "USD",
+          "price_usd": 31.0,
+          "value_usd": 15500.0,
+          "weight_pct": 13.66,
+          "beta": 1.42,
+          "vol_ann": 30.8
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "USD_09",
+    "type": "USD",
+    "query": "I have 40 AMGN, 60 GILD, 120 BMY",
+    "llm_response": {
+      "total_usd": 23391.6,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "AMGN",
+          "shares": 40,
+          "price": 253.21,
+          "currency": "USD",
+          "price_usd": 253.21,
+          "value_usd": 10132.4,
+          "weight_pct": 43.33,
+          "beta": 0.73,
+          "vol_ann": 21.11
+        },
+        {
+          "ticker": "GILD",
+          "shares": 60,
+          "price": 81.49,
+          "currency": "USD",
+          "price_usd": 81.49,
+          "value_usd": 4889.4,
+          "weight_pct": 20.93,
+          "beta": 0.85,
+          "vol_ann": 25.19
+        },
+        {
+          "ticker": "BMY",
+          "shares": 120,
+          "price": 69.45,
+          "currency": "USD",
+          "price_usd": 69.45,
+          "value_usd": 8369.8,
+          "weight_pct": 35.74,
+          "beta": 0.93,
+          "vol_ann": 22.15
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "USD_10",
+    "type": "USD",
+    "query": "My holdings: 350 T, 200 VZ, 80 DIS",
+    "llm_response": {
+      "total_usd": 31415.0,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "T",
+          "shares": 350,
+          "price": 19.5,
+          "currency": "USD",
+          "price_usd": 19.5,
+          "value_usd": 6825.0,
+          "weight_pct": 21.71,
+          "beta": 0.61,
+          "vol_ann": 18.21
+        },
+        {
+          "ticker": "VZ",
+          "shares": 200,
+          "price": 40.25,
+          "currency": "USD",
+          "price_usd": 40.25,
+          "value_usd": 8050.0,
+          "weight_pct": 25.63,
+          "beta": 0.63,
+          "vol_ann": 17.15
+        },
+        {
+          "ticker": "DIS",
+          "shares": 80,
+          "price": 121.5,
+          "currency": "USD",
+          "price_usd": 121.5,
+          "value_usd": 9720.0,
+          "weight_pct": 52.66,
+          "beta": 1.23,
+          "vol_ann": 24.91
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "INR_01",
+    "type": "INR",
+    "query": "I own 500 TCS, 200 INFY, 100 RELIANCE shares",
+    "llm_response": {
+      "total_usd": 46141.18,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "TCS.NS",
+          "shares": 500,
+          "price": 3440,
+          "currency": "INR",
+          "price_usd": 40.95,
+          "value_usd": 20475.0,
+          "weight_pct": 44.38,
+          "beta": 0.7,
+          "vol_ann": 18.21
+        },
+        {
+          "ticker": "INFY.NS",
+          "shares": 200,
+          "price": 1540,
+          "currency": "INR",
+          "price_usd": 18.33,
+          "value_usd": 3666.0,
+          "weight_pct": 7.94,
+          "beta": 0.8,
+          "vol_ann": 20.15
+        },
+        {
+          "ticker": "RELIANCE.NS",
+          "shares": 100,
+          "price": 2360,
+          "currency": "INR",
+          "price_usd": 28.06,
+          "value_usd": 2806.18,
+          "weight_pct": 47.68,
+          "beta": 0.95,
+          "vol_ann": 22.19
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "INR_02",
+    "type": "INR",
+    "query": "Holdings: 300 HDFCBANK, 150 ICICIBANK, 400 SBIN",
+    "llm_response": {
+      "total_usd": 14143.97,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "HDFCBANK.NS",
+          "shares": 300,
+          "price": 1650,
+          "currency": "INR",
+          "price_usd": 19.55,
+          "value_usd": 5865.47,
+          "weight_pct": 41.49,
+          "beta": 0.85,
+          "vol_ann": 12.1
+        },
+        {
+          "ticker": "ICICIBANK.NS",
+          "shares": 150,
+          "price": 950,
+          "currency": "INR",
+          "price_usd": 11.28,
+          "value_usd": 1692.19,
+          "weight_pct": 11.95,
+          "beta": 0.88,
+          "vol_ann": 13.5
+        },
+        {
+          "ticker": "SBIN.NS",
+          "shares": 400,
+          "price": 600,
+          "currency": "INR",
+          "price_usd": 7.12,
+          "value_usd": 2858.31,
+          "weight_pct": 46.56,
+          "beta": 0.79,
+          "vol_ann": 11.2
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "INR_03",
+    "type": "INR",
+    "query": "I have 250 WIPRO, 180 HCLTECH, 320 TECHM",
+    "llm_response": {
+      "total_usd": 14135.29,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "WIPRO.NS",
+          "shares": 250,
+          "price": 445.0,
+          "currency": "INR",
+          "price_usd": 5.29,
+          "value_usd": 1322.5,
+          "weight_pct": 9.35,
+          "beta": 0.7,
+          "vol_ann": 25.1
+        },
+        {
+          "ticker": "HCLTECH.NS",
+          "shares": 180,
+          "price": 935.0,
+          "currency": "INR",
+          "price_usd": 11.12,
+          "value_usd": 2000.16,
+          "weight_pct": 14.15,
+          "beta": 0.85,
+          "vol_ann": 22.5
+        },
+        {
+          "ticker": "TECHM.NS",
+          "shares": 320,
+          "price": 1045.0,
+          "currency": "INR",
+          "price_usd": 12.44,
+          "value_usd": 10812.63,
+          "weight_pct": 76.5,
+          "beta": 0.9,
+          "vol_ann": 20.8
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "INR_04",
+    "type": "INR",
+    "query": "My portfolio: 600 TATAMOTORS, 400 MARUTI, 50 EICHERMOT",
+    "llm_response": {
+      "total_usd": 14115.56,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "TATAMOTORS.NS",
+          "shares": 600,
+          "price": 474.5,
+          "currency": "INR",
+          "price_usd": 5.65,
+          "value_usd": 3390.34,
+          "weight_pct": 24.03,
+          "beta": 1.1,
+          "vol_ann": 25.1
+        },
+        {
+          "ticker": "MARUTI.NS",
+          "shares": 400,
+          "price": 8694.85,
+          "currency": "INR",
+          "price_usd": 103.49,
+          "value_usd": 41400.19,
+          "weight_pct": 73.45,
+          "beta": 0.8,
+          "vol_ann": 20.5
+        },
+        {
+          "ticker": "EICHERMOT.NS",
+          "shares": 50,
+          "price": 2939.3,
+          "currency": "INR",
+          "price_usd": 34.99,
+          "value_usd": 1749.52,
+          "weight_pct": 2.52,
+          "beta": 0.9,
+          "vol_ann": 22.2
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "INR_05",
+    "type": "INR",
+    "query": "I own 200 HINDUNILVR, 350 ITC, 120 NESTLEIND",
+    "llm_response": {
+      "total_usd": 14143.75,
+      "wtd_beta": 0.73,
+      "assets": [
+        {
+          "ticker": "HINDUNILVR.NS",
+          "shares": 200,
+          "price": 3400,
+          "currency": "INR",
+          "price_usd": 40.48,
+          "value_usd": 8095.84,
+          "weight_pct": 57.26,
+          "beta": 0.65,
+          "vol_ann": 12.1
+        },
+        {
+          "ticker": "ITC.NS",
+          "shares": 350,
+          "price": 220,
+          "currency": "INR",
+          "price_usd": 2.62,
+          "value_usd": 917.24,
+          "weight_pct": 6.5,
+          "beta": 0.85,
+          "vol_ann": 15.3
+        },
+        {
+          "ticker": "NESTLEIND.NS",
+          "shares": 120,
+          "price": 20000,
+          "currency": "INR",
+          "price_usd": 238.1,
+          "value_usd": 5050.67,
+          "weight_pct": 35.74,
+          "beta": 0.75,
+          "vol_ann": 10.8
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "INR_06",
+    "type": "INR",
+    "query": "Holdings: 1000 POWERGRID, 800 NTPC, 500 BPCL",
+    "llm_response": {
+      "total_usd": 14135.29,
+      "wtd_beta": 0.74,
+      "assets": [
+        {
+          "ticker": "POWERGRID.NS",
+          "shares": 1000,
+          "price": 224.05,
+          "currency": "INR",
+          "price_usd": 2.66,
+          "value_usd": 2660.35,
+          "weight_pct": 18.83,
+          "beta": 0.65,
+          "vol_ann": 12.1
+        },
+        {
+          "ticker": "NTPC.NS",
+          "shares": 800,
+          "price": 174.2,
+          "currency": "INR",
+          "price_usd": 2.07,
+          "value_usd": 1656.19,
+          "weight_pct": 11.73,
+          "beta": 0.68,
+          "vol_ann": 10.9
+        },
+        {
+          "ticker": "BPCL.NS",
+          "shares": 500,
+          "price": 335.55,
+          "currency": "INR",
+          "price_usd": 3.99,
+          "value_usd": 1998.75,
+          "weight_pct": 14.14,
+          "beta": 0.85,
+          "vol_ann": 15.3
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "INR_07",
+    "type": "INR",
+    "query": "I have 90 BAJAJFINSV, 60 BAJFINANCE, 200 HDFC",
+    "llm_response": {
+      "total_usd": 24151.92,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "BAJAJFINSV.NS",
+          "shares": 90,
+          "price": 1539.0,
+          "currency": "INR",
+          "price_usd": 18.29,
+          "value_usd": 1646.21,
+          "weight_pct": 6.81,
+          "beta": 0.95,
+          "vol_ann": 25.11
+        },
+        {
+          "ticker": "BAJFINANCE.NS",
+          "shares": 60,
+          "price": 6591.0,
+          "currency": "INR",
+          "price_usd": 78.17,
+          "value_usd": 4690.29,
+          "weight_pct": 19.43,
+          "beta": 0.85,
+          "vol_ann": 22.15
+        },
+        {
+          "ticker": "HDFC.NS",
+          "shares": 200,
+          "price": 2745.0,
+          "currency": "INR",
+          "price_usd": 32.65,
+          "value_usd": 17815.42,
+          "weight_pct": 73.76,
+          "beta": 0.78,
+          "vol_ann": 18.29
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "INR_08",
+    "type": "INR",
+    "query": "My shares: 400 COALINDIA, 300 ONGC, 150 GAIL",
+    "llm_response": {
+      "total_usd": 14143.97,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "COALINDIA.NS",
+          "shares": 400,
+          "price": 224.05,
+          "currency": "INR",
+          "price_usd": 2.67,
+          "value_usd": 1066.8,
+          "weight_pct": 7.54,
+          "beta": 0.73,
+          "vol_ann": 25.11
+        },
+        {
+          "ticker": "ONGC.NS",
+          "shares": 300,
+          "price": 145.15,
+          "currency": "INR",
+          "price_usd": 1.73,
+          "value_usd": 519.15,
+          "weight_pct": 3.67,
+          "beta": 0.81,
+          "vol_ann": 22.19
+        },
+        {
+          "ticker": "GAIL.NS",
+          "shares": 150,
+          "price": 102.35,
+          "currency": "INR",
+          "price_usd": 1.22,
+          "value_usd": 182.95,
+          "weight_pct": 1.29,
+          "beta": 0.92,
+          "vol_ann": 24.51
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "INR_09",
+    "type": "INR",
+    "query": "Portfolio: 700 ADANIENT, 200 ADANIPORTS, 100 ADANIGREEN",
+    "llm_response": {
+      "total_usd": 14143.93,
+      "wtd_beta": 0.95,
+      "assets": [
+        {
+          "ticker": "ADANIENT.NS",
+          "shares": 700,
+          "price": 1945.0,
+          "currency": "INR",
+          "price_usd": 23.12,
+          "value_usd": 16183.93,
+          "weight_pct": 114.41,
+          "beta": 1.2,
+          "vol_ann": 35.0
+        },
+        {
+          "ticker": "ADANIPORTS.NS",
+          "shares": 200,
+          "price": 775.0,
+          "currency": "INR",
+          "price_usd": 9.22,
+          "value_usd": 1843.93,
+          "weight_pct": 13.02,
+          "beta": 1.1,
+          "vol_ann": 30.0
+        },
+        {
+          "ticker": "ADANIGREEN.NS",
+          "shares": 100,
+          "price": 875.0,
+          "currency": "INR",
+          "price_usd": 10.43,
+          "value_usd": 1043.0,
+          "weight_pct": -27.43,
+          "beta": 1.3,
+          "vol_ann": 40.0
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "INR_10",
+    "type": "INR",
+    "query": "I hold 500 SUNPHARMA, 300 DRREDDY, 200 CIPLA",
+    "llm_response": {
+      "total_usd": 14115.38,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "SUNPHARMA.NS",
+          "shares": 500,
+          "price": 740.0,
+          "currency": "INR",
+          "price_usd": 8.81,
+          "value_usd": 4410.19,
+          "weight_pct": 31.26,
+          "beta": 0.7,
+          "vol_ann": 25.0
+        },
+        {
+          "ticker": "DRREDDY.NS",
+          "shares": 300,
+          "price": 4460.0,
+          "currency": "INR",
+          "price_usd": 53.08,
+          "value_usd": 15924.19,
+          "weight_pct": 56.45,
+          "beta": 0.9,
+          "vol_ann": 28.0
+        },
+        {
+          "ticker": "CIPLA.NS",
+          "shares": 200,
+          "price": 940.0,
+          "currency": "INR",
+          "price_usd": 11.19,
+          "value_usd": 2237.99,
+          "weight_pct": 12.29,
+          "beta": 0.8,
+          "vol_ann": 22.0
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "MIX_01",
+    "type": "MIXED",
+    "query": "I have 50 AAPL, 200 TCS, 100 INFY shares",
+    "llm_response": {
+      "total_usd": 13344.48,
+      "wtd_beta": 0.93,
+      "assets": [
+        {
+          "ticker": "AAPL",
+          "shares": 50,
+          "price": 145.23,
+          "currency": "USD",
+          "price_usd": 145.23,
+          "value_usd": 7261.5,
+          "weight_pct": 54.43,
+          "beta": 1.2,
+          "vol_ann": 25.11
+        },
+        {
+          "ticker": "TCS.NS",
+          "shares": 200,
+          "price": 3420,
+          "currency": "INR",
+          "price_usd": 40.71,
+          "value_usd": 8142.98,
+          "weight_pct": 61.01,
+          "beta": 0.7,
+          "vol_ann": 18.23
+        },
+        {
+          "ticker": "INFY.NS",
+          "shares": 100,
+          "price": 1350,
+          "currency": "INR",
+          "price_usd": 16.07,
+          "value_usd": 1607,
+          "weight_pct": -34.44,
+          "beta": 0.8,
+          "vol_ann": 20.15
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "MIX_02",
+    "type": "MIXED",
+    "query": "Portfolio: 80 MSFT, 300 RELIANCE, 150 HDFCBANK",
+    "llm_response": {
+      "total_usd": 23391.59,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "MSFT",
+          "shares": 80,
+          "price": 233.42,
+          "currency": "USD",
+          "price_usd": 233.42,
+          "value_usd": 18674.96,
+          "weight_pct": 80.03,
+          "beta": 0.95,
+          "vol_ann": 23.19
+        },
+        {
+          "ticker": "RELIANCE.NS",
+          "shares": 300,
+          "price": 2249.85,
+          "currency": "INR",
+          "price_usd": 26.73,
+          "value_usd": 4018.95,
+          "weight_pct": 17.17,
+          "beta": 0.65,
+          "vol_ann": 20.15
+        },
+        {
+          "ticker": "HDFCBANK.NS",
+          "shares": 150,
+          "price": 1474.15,
+          "currency": "INR",
+          "price_usd": 17.51,
+          "value_usd": 2627.68,
+          "weight_pct": 11.25,
+          "beta": 0.75,
+          "vol_ann": 18.29
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "MIX_03",
+    "type": "MIXED",
+    "query": "I own 30 NVDA, 500 WIPRO, 200 ICICIBANK",
+    "llm_response": {
+      "total_usd": 14143.29,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "NVDA",
+          "shares": 30,
+          "price": 380.0,
+          "currency": "USD",
+          "price_usd": 380.0,
+          "value_usd": 11400.0,
+          "weight_pct": 80.59,
+          "beta": 1.23,
+          "vol_ann": 35.21
+        },
+        {
+          "ticker": "WIPRO.NS",
+          "shares": 500,
+          "price": 420.0,
+          "currency": "INR",
+          "price_usd": 5.0,
+          "value_usd": 2500.0,
+          "weight_pct": 17.68,
+          "beta": 0.7,
+          "vol_ann": 20.15
+        },
+        {
+          "ticker": "ICICIBANK.NS",
+          "shares": 200,
+          "price": 95.0,
+          "currency": "INR",
+          "price_usd": 1.13,
+          "value_usd": 226.0,
+          "weight_pct": 1.6,
+          "beta": 0.85,
+          "vol_ann": 18.29
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "MIX_04",
+    "type": "MIXED",
+    "query": "My holdings: 100 GOOGL, 400 TATAMOTORS, 300 SBIN",
+    "llm_response": {
+      "total_usd": 233415.56,
+      "wtd_beta": 1.13,
+      "assets": [
+        {
+          "ticker": "GOOGL",
+          "shares": 100,
+          "price": 2700.0,
+          "currency": "USD",
+          "price_usd": 2700.0,
+          "value_usd": 270000.0,
+          "weight_pct": 115.83,
+          "beta": 1.1,
+          "vol_ann": 25.0
+        },
+        {
+          "ticker": "TATAMOTORS.NS",
+          "shares": 400,
+          "price": 580.0,
+          "currency": "INR",
+          "price_usd": 6.9,
+          "value_usd": 2760.0,
+          "weight_pct": 1.18,
+          "beta": 1.2,
+          "vol_ann": 30.0
+        },
+        {
+          "ticker": "SBIN.NS",
+          "shares": 300,
+          "price": 630.0,
+          "currency": "INR",
+          "price_usd": 7.5,
+          "value_usd": 2255.56,
+          "weight_pct": 0.97,
+          "beta": 1.0,
+          "vol_ann": 20.0
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "MIX_05",
+    "type": "MIXED",
+    "query": "I hold 200 META, 600 ITC, 250 HINDUNILVR",
+    "llm_response": {
+      "total_usd": 54391.18,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "META",
+          "shares": 200,
+          "price": 274.41,
+          "currency": "USD",
+          "price_usd": 274.41,
+          "value_usd": 54882.0,
+          "weight_pct": 100.93,
+          "beta": 1.23,
+          "vol_ann": 35.21
+        },
+        {
+          "ticker": "ITC.NS",
+          "shares": 600,
+          "price": 347.15,
+          "currency": "INR",
+          "price_usd": 4.13,
+          "value_usd": 2478.18,
+          "weight_pct": 4.56,
+          "beta": 0.73,
+          "vol_ann": 21.19
+        },
+        {
+          "ticker": "HINDUNILVR.NS",
+          "shares": 250,
+          "price": 2665.55,
+          "currency": "INR",
+          "price_usd": 31.65,
+          "value_usd": 7919.0,
+          "weight_pct": -5.49,
+          "beta": 0.63,
+          "vol_ann": 18.55
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "MIX_06",
+    "type": "MIXED",
+    "query": "Portfolio: 150 AMZN, 700 NTPC, 400 BPCL",
+    "llm_response": {
+      "total_usd": 23591.29,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "AMZN",
+          "shares": 150,
+          "price": 95.0,
+          "currency": "USD",
+          "price_usd": 95.0,
+          "value_usd": 14250.0,
+          "weight_pct": 60.43,
+          "beta": 1.2,
+          "vol_ann": 25.1
+        },
+        {
+          "ticker": "NTPC.NS",
+          "shares": 700,
+          "price": 174.0,
+          "currency": "INR",
+          "price_usd": 2.07,
+          "value_usd": 1449.0,
+          "weight_pct": 6.14,
+          "beta": 0.7,
+          "vol_ann": 18.2
+        },
+        {
+          "ticker": "BPCL.NS",
+          "shares": 400,
+          "price": 335.0,
+          "currency": "INR",
+          "price_usd": 3.99,
+          "value_usd": 1592.29,
+          "weight_pct": 33.43,
+          "beta": 0.8,
+          "vol_ann": 22.5
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "MIX_07",
+    "type": "MIXED",
+    "query": "I have 40 JPM, 500 SUNPHARMA, 100 DRREDDY",
+    "llm_response": {
+      "total_usd": 14115.84,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "JPM",
+          "shares": 40,
+          "price": 140.23,
+          "currency": "USD",
+          "price_usd": 140.23,
+          "value_usd": 5612.0,
+          "weight_pct": 39.75,
+          "beta": 1.2,
+          "vol_ann": 22.1
+        },
+        {
+          "ticker": "SUNPHARMA.NS",
+          "shares": 500,
+          "price": 1050.0,
+          "currency": "INR",
+          "price_usd": 12.5,
+          "value_usd": 6250.0,
+          "weight_pct": 44.26,
+          "beta": 0.8,
+          "vol_ann": 25.0
+        },
+        {
+          "ticker": "DRREDDY.NS",
+          "shares": 100,
+          "price": 4500.0,
+          "currency": "INR",
+          "price_usd": 53.57,
+          "value_usd": 5357.84,
+          "weight_pct": 15.99,
+          "beta": 0.7,
+          "vol_ann": 20.0
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "MIX_08",
+    "type": "MIXED",
+    "query": "Holdings: 250 TSLA, 300 BAJAJFINSV, 80 BAJFINANCE",
+    "llm_response": {
+      "total_usd": 413131.18,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "TSLA",
+          "shares": 250,
+          "price": 193.88,
+          "currency": "USD",
+          "price_usd": 193.88,
+          "value_usd": 48470.0,
+          "weight_pct": 11.73,
+          "beta": 2.05,
+          "vol_ann": 53.21
+        },
+        {
+          "ticker": "BAJAJFINSV.NS",
+          "shares": 300,
+          "price": 1793.55,
+          "currency": "INR",
+          "price_usd": 21.35,
+          "value_usd": 6434.5,
+          "weight_pct": 1.56,
+          "beta": 0.95,
+          "vol_ann": 31.19
+        },
+        {
+          "ticker": "BAJFINANCE.NS",
+          "shares": 80,
+          "price": 7348.2,
+          "currency": "INR",
+          "price_usd": 87.44,
+          "value_usd": 7015.2,
+          "weight_pct": 1.7,
+          "beta": 0.85,
+          "vol_ann": 29.41
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "MIX_09",
+    "type": "MIXED",
+    "query": "I own 120 XOM, 800 COALINDIA, 200 ONGC",
+    "llm_response": {
+      "total_usd": 13514.4,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "XOM",
+          "shares": 120,
+          "price": 89.28,
+          "currency": "USD",
+          "price_usd": 89.28,
+          "value_usd": 10713.6,
+          "weight_pct": 79.29,
+          "beta": 0.75,
+          "vol_ann": 21.11
+        },
+        {
+          "ticker": "COALINDIA.NS",
+          "shares": 800,
+          "price": 224.15,
+          "currency": "INR",
+          "price_usd": 2.67,
+          "value_usd": 2136.0,
+          "weight_pct": 15.8,
+          "beta": 0.95,
+          "vol_ann": 25.19
+        },
+        {
+          "ticker": "ONGC.NS",
+          "shares": 200,
+          "price": 154.3,
+          "currency": "INR",
+          "price_usd": 1.83,
+          "value_usd": 366.0,
+          "weight_pct": 4.91,
+          "beta": 0.85,
+          "vol_ann": 22.15
+        }
+      ]
+    },
+    "parse_success": true
+  },
+  {
+    "id": "MIX_10",
+    "type": "MIXED",
+    "query": "My portfolio: 60 DIS, 1000 POWERGRID, 500 ADANIENT",
+    "llm_response": {
+      "total_usd": 14143.49,
+      "wtd_beta": 0.83,
+      "assets": [
+        {
+          "ticker": "DIS",
+          "shares": 60,
+          "price": 93.45,
+          "currency": "USD",
+          "price_usd": 93.45,
+          "value_usd": 5607.0,
+          "weight_pct": 39.65,
+          "beta": 1.21,
+          "vol_ann": 25.11
+        },
+        {
+          "ticker": "POWERGRID.NS",
+          "shares": 1000,
+          "price": 224.05,
+          "currency": "INR",
+          "price_usd": 2.66,
+          "value_usd": 2659.35,
+          "weight_pct": 18.79,
+          "beta": 0.65,
+          "vol_ann": 18.29
+        },
+        {
+          "ticker": "ADANIENT.NS",
+          "shares": 500,
+          "price": 1855.9,
+          "currency": "INR",
+          "price_usd": 22.05,
+          "value_usd": 6877.14,
+          "weight_pct": 41.56,
+          "beta": 0.85,
+          "vol_ann": 32.15
+        }
+      ]
+    },
+    "parse_success": true
+  }
+]

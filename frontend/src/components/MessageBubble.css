@@ -1,0 +1,172 @@
+/* ─── Message Bubbles ────────────────────────────────────── */
+.bubble-wrap {
+  display: flex;
+  gap: 12px;
+  max-width: 820px;
+  margin: 0 auto 18px;
+  padding: 0 8px;
+  animation: fadeUp 0.2s ease;
+}
+.bubble-user { flex-direction: row-reverse; }
+.bubble-ai   { flex-direction: row; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Avatars */
+.bubble-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.bubble-user .bubble-avatar {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+}
+.bubble-ai .bubble-avatar {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+/* Body */
+.bubble-body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-width: calc(100% - 50px);
+}
+
+/* Route tag */
+.bubble-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  font-family: var(--font-mono);
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 2px 8px;
+  width: fit-content;
+  text-transform: uppercase;
+}
+
+/* Bubble content box */
+.bubble-content {
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.7;
+  word-break: break-word;
+}
+
+.bubble-content--user {
+  background: var(--accent);
+  color: #fff;
+  border-top-right-radius: 4px;
+}
+
+.bubble-content--ai {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-top-left-radius: 4px;
+}
+
+/* Markdown inside AI bubble */
+.bubble-content--ai h1,
+.bubble-content--ai h2,
+.bubble-content--ai h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gold);
+  margin: 14px 0 6px;
+}
+.bubble-content--ai h1:first-child,
+.bubble-content--ai h2:first-child,
+.bubble-content--ai h3:first-child { margin-top: 0; }
+
+.bubble-content--ai p  { margin-bottom: 8px; }
+.bubble-content--ai ul,
+.bubble-content--ai ol { padding-left: 18px; margin-bottom: 8px; }
+.bubble-content--ai li { margin-bottom: 3px; }
+
+.bubble-content--ai strong { color: #fff; font-weight: 600; }
+.bubble-content--ai em     { color: var(--muted); }
+
+.bubble-content--ai code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: rgba(255,255,255,0.07);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.bubble-content--ai pre {
+  background: #060b12;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  overflow-x: auto;
+  margin: 8px 0;
+}
+.bubble-content--ai pre code {
+  background: none;
+  padding: 0;
+  font-size: 13px;
+}
+
+.bubble-content--ai hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 10px 0;
+}
+
+.bubble-content--ai table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 8px 0;
+}
+.bubble-content--ai th {
+  background: var(--surface2);
+  padding: 6px 10px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+.bubble-content--ai td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.bubble-content--ai tr:last-child td { border-bottom: none; }
+
+/* Blinking cursor while streaming */
+.bubble-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 15px;
+  background: var(--accent);
+  border-radius: 2px;
+  margin-left: 3px;
+  vertical-align: middle;
+  animation: blink 0.9s ease-in-out infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .bubble-wrap { padding: 0 4px; margin-bottom: 14px; }
+  .bubble-content { font-size: 13px; padding: 10px 13px; }
+  .bubble-avatar  { width: 28px; height: 28px; }
+}

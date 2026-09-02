@@ -11,3 +11,10 @@ wheels/
 
 # Streamlit secrets — NEVER commit API keys
 .streamlit/secrets.toml
+
+# Research Vault — local ChromaDB vector store (never commit, large binary files)
+chroma_db/
+
+# Env files
+.env
+.env.*

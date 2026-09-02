@@ -1,0 +1,28 @@
+/* ─── App Layout ─────────────────────────────────────────── */
+.app-layout {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  transition: margin-left 0.3s ease;
+}
+
+/* When sidebar collapses, give toggle btn some breathing room */
+.app-main--expanded {
+  margin-left: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app-layout { flex-direction: column; }
+  .app-main   { margin-left: 0 !important; }
+}

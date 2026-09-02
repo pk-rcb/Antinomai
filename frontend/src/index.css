@@ -1,0 +1,38 @@
+/* ─── Global styles ─────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #080d16;
+  --surface:   #0f1624;
+  --surface2:  #182036;
+  --border:    #1e2d45;
+  --text:      #e2e8f0;
+  --muted:     #4e6482;
+  --gold:      #f59e0b;
+  --bull:      #10b981;
+  --bear:      #ef4444;
+  --accent:    #3b82f6;
+  --radius:    10px;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+html, body, #root {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar        { width: 5px; height: 5px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* Selection */
+::selection { background: rgba(59,130,246,0.25); color: var(--text); }

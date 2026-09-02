@@ -1,0 +1,360 @@
+/* ─── Research Vault Panel ───────────────────────────────────── */
+
+.vault-panel {
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+/* Header / toggle button */
+.vault-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  transition: background 0.15s;
+}
+.vault-header:hover { background: rgba(255,255,255,0.03); }
+.vault-header--open  { background: rgba(251,191,36,0.06); }
+
+.vault-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vault-icon  { font-size: 14px; }
+.vault-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* Animated badge */
+.vault-badge {
+  background: #f59e0b;
+  color: #000;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 1px 6px;
+  box-shadow: 0 0 8px rgba(245,158,11,0.5);
+  animation: vaultBadgePulse 2.5s ease-in-out infinite;
+}
+@keyframes vaultBadgePulse {
+  0%, 100% { box-shadow: 0 0 6px rgba(245,158,11,0.5); }
+  50%       { box-shadow: 0 0 14px rgba(245,158,11,0.9); }
+}
+
+/* Chevron */
+.vault-chevron {
+  color: var(--muted);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+.vault-chevron--open { transform: rotate(180deg); }
+
+/* Body */
+.vault-body {
+  padding: 0 12px 14px;
+}
+
+/* Tabs */
+.vault-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 3px;
+}
+.vault-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 11px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  padding: 5px 4px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.vault-tab--active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+/* Metadata row */
+.vault-meta-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+/* Inputs */
+.vault-input {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 11px;
+  font-family: 'Inter', sans-serif;
+  padding: 6px 8px;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+.vault-input:focus { border-color: #f59e0b; }
+.vault-input::placeholder { color: var(--muted); }
+.vault-input--ticker { max-width: 80px; flex-shrink: 0; }
+
+.vault-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 24px;
+  cursor: pointer;
+}
+
+/* Drop zone */
+.vault-dropzone {
+  border: 1.5px dashed var(--border);
+  border-radius: 8px;
+  padding: 16px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  color: var(--muted);
+  margin-bottom: 8px;
+  min-height: 80px;
+}
+.vault-dropzone:hover       { border-color: #f59e0b; background: rgba(245,158,11,0.04); }
+.vault-dropzone--over       { border-color: #f59e0b; background: rgba(245,158,11,0.09); }
+.vault-dropzone--uploading  { pointer-events: none; opacity: 0.7; }
+
+.vault-drop-label {
+  font-size: 12px;
+  color: var(--text);
+  font-weight: 500;
+}
+.vault-drop-sub {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.vault-uploading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Text mode */
+.vault-text-mode {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.vault-textarea {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 11px;
+  font-family: 'Inter', sans-serif;
+  padding: 7px 8px;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.15s;
+  line-height: 1.5;
+}
+.vault-textarea:focus      { border-color: #f59e0b; }
+.vault-textarea::placeholder { color: var(--muted); }
+
+.vault-ingest-btn {
+  background: rgba(245,158,11,0.12);
+  border: 1px solid rgba(245,158,11,0.3);
+  border-radius: 6px;
+  color: #f59e0b;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  padding: 7px 12px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.vault-ingest-btn:hover:not(:disabled) {
+  background: rgba(245,158,11,0.22);
+  border-color: #f59e0b;
+}
+.vault-ingest-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Spinner */
+.vault-spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--border);
+  border-top-color: #f59e0b;
+  border-radius: 50%;
+  animation: vaultSpin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+.vault-spinner--sm {
+  width: 10px;
+  height: 10px;
+}
+@keyframes vaultSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Toast */
+.vault-toast {
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 11px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  animation: vaultToastIn 0.2s ease;
+}
+@keyframes vaultToastIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.vault-toast--ok  { background: rgba(16,185,129,0.12); color: #10b981; border: 1px solid rgba(16,185,129,0.2); }
+.vault-toast--err { background: rgba(239,68,68,0.12);  color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+
+/* Docs section */
+.vault-docs-section { margin-top: 4px; }
+
+.vault-docs-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.vault-docs-loading {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+/* Empty state */
+.vault-empty {
+  text-align: center;
+  padding: 12px 6px;
+}
+.vault-empty-icon { font-size: 22px; margin-bottom: 6px; }
+.vault-empty-text {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.vault-empty-text strong { color: #f59e0b; }
+
+/* Document rows */
+.vault-doc-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 6px;
+  border-radius: 6px;
+  transition: background 0.12s;
+  margin-bottom: 2px;
+  position: relative;
+}
+.vault-doc-row:hover { background: rgba(255,255,255,0.04); }
+.vault-doc-row:hover .vault-doc-delete { opacity: 1; }
+
+.vault-doc-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+.vault-doc-info { flex: 1; min-width: 0; }
+.vault-doc-name {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+
+.vault-doc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+.vault-doc-ticker {
+  background: rgba(245,158,11,0.15);
+  color: #f59e0b;
+  font-size: 9px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.vault-doc-type {
+  font-size: 9px;
+  color: var(--muted);
+  background: var(--surface2);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.vault-doc-date,
+.vault-doc-chunks {
+  font-size: 9px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+
+/* Delete button */
+.vault-doc-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+  line-height: 1;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vault-doc-delete:hover { background: rgba(239,68,68,0.1); }
+.vault-doc-delete:disabled { opacity: 0.5; cursor: default; }

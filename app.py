@@ -737,11 +737,9 @@ if (st.session_state.portfolio_df_data
         c3.metric("Wtd. Beta",   f"{bv:.3f}" if bv else "N/A")
 
 # ==========================================
-# CHAT INPUT
-# ==========================================
-if prompt := st.chat_input("Ask about a stock, analyze a portfolio, or request a fundamental analysis..."):
-    st.chat_message("user").markdown(prompt)
-    st.session_state.messages.append({"role": "user", "content": prompt})
+# CHAT & VOICE INPUT
+audio_bytes = st.audio_input("Or record a voice query:")
+
 
     # Build initial graph state
     if uploaded_file is not None:
