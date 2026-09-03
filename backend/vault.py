@@ -85,7 +85,7 @@ def _get_chroma_collection():
 
             class GeminiRESTEmbeddingFunction(EmbeddingFunction):
                 """Call Google Gemini embedding API directly via REST."""
-                _URL = "https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent"
+                _URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent"
 
                 def __init__(self, api_key: str):
                     self._api_key = api_key
@@ -94,8 +94,11 @@ def _get_chroma_collection():
                     resp = _requests.post(
                         self._URL,
                         params={"key": self._api_key},
-                        json={"model": "models/text-embedding-004",
-                              "content": {"parts": [{"text": text}]}},
+                        json={
+                            "model": "models/gemini-embedding-001",
+                            "content": {"parts": [{"text": text}]},
+                            "outputDimensionality": 768
+                        },
                         timeout=30,
                     )
                     resp.raise_for_status()
@@ -167,14 +170,17 @@ def _embed_texts(texts: list[str]) -> list[list[float]]:
 
     if gemini_key:
         import requests
-        url = "https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent"
+        url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent"
         embeddings = []
         for text in texts:
             resp = requests.post(
                 url,
                 params={"key": gemini_key},
-                json={"model": "models/text-embedding-004",
-                      "content": {"parts": [{"text": text}]}},
+                json={
+                    "model": "models/gemini-embedding-001",
+                    "content": {"parts": [{"text": text}]},
+                    "outputDimensionality": 768
+                },
                 timeout=30,
             )
             resp.raise_for_status()
