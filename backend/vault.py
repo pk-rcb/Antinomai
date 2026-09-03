@@ -84,28 +84,45 @@ def _get_chroma_collection():
             from chromadb.api.types import Documents, EmbeddingFunction, Embeddings
 
             class GeminiRESTEmbeddingFunction(EmbeddingFunction):
-                """Call Google Gemini embedding API directly via REST."""
-                _URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent"
+                """Call Google Gemini embedding API directly via REST with batching."""
+                _URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents"
 
                 def __init__(self, api_key: str):
                     self._api_key = api_key
-
-                def _embed_one(self, text: str) -> list[float]:
-                    resp = _requests.post(
-                        self._URL,
-                        params={"key": self._api_key},
-                        json={
-                            "model": "models/gemini-embedding-001",
-                            "content": {"parts": [{"text": text}]},
-                            "outputDimensionality": 768
-                        },
-                        timeout=30,
-                    )
-                    resp.raise_for_status()
-                    return resp.json()["embedding"]["values"]
+                    self._batch_size = 100
 
                 def __call__(self, input: Documents) -> Embeddings:
-                    return [self._embed_one(t) for t in input]
+                    import time
+                    all_embeddings = []
+                    for i in range(0, len(input), self._batch_size):
+                        batch = input[i:i + self._batch_size]
+                        requests_payload = [
+                            {
+                                "model": "models/gemini-embedding-001",
+                                "content": {"parts": [{"text": t}]},
+                                "outputDimensionality": 768
+                            }
+                            for t in batch
+                        ]
+                        resp = _requests.post(
+                            self._URL,
+                            params={"key": self._api_key},
+                            json={"requests": requests_payload},
+                            timeout=30,
+                        )
+                        if resp.status_code == 429:
+                            print("[Vault] 429 Too Many Requests, sleeping for 15s...")
+                            time.sleep(15)
+                            resp = _requests.post(
+                                self._URL,
+                                params={"key": self._api_key},
+                                json={"requests": requests_payload},
+                                timeout=30,
+                            )
+                        resp.raise_for_status()
+                        for emb in resp.json().get("embeddings", []):
+                            all_embeddings.append(emb["values"])
+                    return all_embeddings
 
             embed_fn = GeminiRESTEmbeddingFunction(api_key=gemini_key)
         else:
@@ -170,22 +187,42 @@ def _embed_texts(texts: list[str]) -> list[list[float]]:
 
     if gemini_key:
         import requests
-        url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent"
-        embeddings = []
-        for text in texts:
+        import time
+        url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents"
+        all_embeddings = []
+        batch_size = 100
+        
+        for i in range(0, len(texts), batch_size):
+            batch = texts[i:i + batch_size]
+            requests_payload = [
+                {
+                    "model": "models/gemini-embedding-001",
+                    "content": {"parts": [{"text": t}]},
+                    "outputDimensionality": 768
+                }
+                for t in batch
+            ]
+            
             resp = requests.post(
                 url,
                 params={"key": gemini_key},
-                json={
-                    "model": "models/gemini-embedding-001",
-                    "content": {"parts": [{"text": text}]},
-                    "outputDimensionality": 768
-                },
+                json={"requests": requests_payload},
                 timeout=30,
             )
+            if resp.status_code == 429:
+                print("[Vault] 429 Too Many Requests, sleeping for 15s...")
+                time.sleep(15)
+                resp = requests.post(
+                    url,
+                    params={"key": gemini_key},
+                    json={"requests": requests_payload},
+                    timeout=30,
+                )
             resp.raise_for_status()
-            embeddings.append(resp.json()["embedding"]["values"])
-        return embeddings
+            for emb in resp.json().get("embeddings", []):
+                all_embeddings.append(emb["values"])
+                
+        return all_embeddings
     else:
         from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
         embed_fn = DefaultEmbeddingFunction()
