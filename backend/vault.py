@@ -345,13 +345,14 @@ def _retrieve_qdrant(query: str, ticker_filter: Optional[str], n_results: int) -
             must=[FieldCondition(key="ticker", match=MatchValue(value=ticker_filter))]
         )
 
-    hits   = client.search(
+    response = client.query_points(
         collection_name=col,
-        query_vector=embeddings[0],
+        query=embeddings[0],
         limit=n_results,
         query_filter=qfilter,
         with_payload=True,
     )
+    hits = response.points
     chunks = []
     for hit in hits:
         p = hit.payload or {}
