@@ -80,11 +80,22 @@ def _get_chroma_collection():
 
         gemini_key = os.environ.get("GEMINI_API_KEY")
         if gemini_key:
-            from chromadb.utils.embedding_functions import GoogleGenerativeAiEmbeddingFunction
-            embed_fn = GoogleGenerativeAiEmbeddingFunction(
-                api_key=gemini_key,
-                model_name="models/text-embedding-004"
-            )
+            import google.generativeai as genai
+            from chromadb.api.types import Documents, EmbeddingFunction, Embeddings
+            
+            class CustomGeminiEmbeddingFunction(EmbeddingFunction):
+                def __init__(self, api_key: str):
+                    genai.configure(api_key=api_key)
+                
+                def __call__(self, input: Documents) -> Embeddings:
+                    result = genai.embed_content(
+                        model="models/text-embedding-004",
+                        content=input,
+                        task_type="retrieval_document"
+                    )
+                    return result['embedding']
+                    
+            embed_fn = CustomGeminiEmbeddingFunction(api_key=gemini_key)
         else:
             from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
             embed_fn = DefaultEmbeddingFunction()
@@ -133,12 +144,14 @@ def _embed_texts(texts: list[str]) -> list[list[float]]:
     gemini_key = os.environ.get("GEMINI_API_KEY")
     
     if gemini_key:
-        from chromadb.utils.embedding_functions import GoogleGenerativeAiEmbeddingFunction
-        embed_fn = GoogleGenerativeAiEmbeddingFunction(
-            api_key=gemini_key,
-            model_name="models/text-embedding-004"
+        import google.generativeai as genai
+        genai.configure(api_key=gemini_key)
+        result = genai.embed_content(
+            model="models/text-embedding-004",
+            content=texts,
+            task_type="retrieval_document"
         )
-        return [list(e) for e in embed_fn(texts)]
+        return [list(e) for e in result['embedding']]
     else:
         from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
         embed_fn = DefaultEmbeddingFunction()
