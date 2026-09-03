@@ -147,16 +147,40 @@ def _embed_texts(texts: list[str]) -> list[list[float]]:
 
     if cohere_key:
         import cohere
+        import time
         co = cohere.Client(api_key=cohere_key)
         
-        # Cohere supports embedding batches directly. 
-        # Their library automatically handles batching appropriately.
-        response = co.embed(
-            texts=texts,
-            model="embed-english-v3.0",
-            input_type="search_document"
-        )
-        return response.embeddings
+        all_embeddings = []
+        batch_size = 96  # Cohere's max per request is 96
+        
+        for i in range(0, len(texts), batch_size):
+            batch = texts[i:i + batch_size]
+            
+            # To avoid the 40 requests/minute (1 req / 1.5s) limit on free tier:
+            if i > 0:
+                time.sleep(1.5)
+                
+            try:
+                response = co.embed(
+                    texts=batch,
+                    model="embed-english-v3.0",
+                    input_type="search_document"
+                )
+                all_embeddings.extend(response.embeddings)
+            except Exception as e:
+                if "429" in str(e) or "Too Many Requests" in str(e):
+                    print("[Vault] Cohere 429 Too Many Requests, sleeping for 20s...")
+                    time.sleep(20)
+                    response = co.embed(
+                        texts=batch,
+                        model="embed-english-v3.0",
+                        input_type="search_document"
+                    )
+                    all_embeddings.extend(response.embeddings)
+                else:
+                    raise e
+                    
+        return all_embeddings
     else:
         from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
         embed_fn = DefaultEmbeddingFunction()
