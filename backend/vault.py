@@ -85,7 +85,7 @@ def _get_chroma_collection():
 
             class GeminiRESTEmbeddingFunction(EmbeddingFunction):
                 """Call Google Gemini embedding API directly via REST."""
-                _URL = "https://generativelanguage.googleapis.com/v1/models/text-embedding-004:embedContent"
+                _URL = "https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent"
 
                 def __init__(self, api_key: str):
                     self._api_key = api_key
@@ -167,7 +167,7 @@ def _embed_texts(texts: list[str]) -> list[list[float]]:
 
     if gemini_key:
         import requests
-        url = "https://generativelanguage.googleapis.com/v1/models/text-embedding-004:embedContent"
+        url = "https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent"
         embeddings = []
         for text in texts:
             resp = requests.post(
