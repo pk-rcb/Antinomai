@@ -78,12 +78,12 @@ def _get_chroma_collection():
         import chromadb
         import os
 
-        hf_token = os.environ.get("HF_TOKEN")
-        if hf_token:
-            from chromadb.utils.embedding_functions import HuggingFaceEmbeddingFunction
-            embed_fn = HuggingFaceEmbeddingFunction(
-                api_key=hf_token,
-                model_name="sentence-transformers/all-MiniLM-L6-v2"
+        gemini_key = os.environ.get("GEMINI_API_KEY")
+        if gemini_key:
+            from chromadb.utils.embedding_functions import GoogleGenerativeAiEmbeddingFunction
+            embed_fn = GoogleGenerativeAiEmbeddingFunction(
+                api_key=gemini_key,
+                model_name="models/text-embedding-004"
             )
         else:
             from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
@@ -128,25 +128,17 @@ def _get_qdrant_collection():
 
 
 def _embed_texts(texts: list[str]) -> list[list[float]]:
-    """Embed using HF API (if token provided) or fallback to local ONNX."""
+    """Embed using Google Gemini API (if token provided) or fallback to local ONNX."""
     import os
-    hf_token = os.environ.get("HF_TOKEN")
+    gemini_key = os.environ.get("GEMINI_API_KEY")
     
-    if hf_token:
-        import requests
-        url = "https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2"
-        headers = {"Authorization": f"Bearer {hf_token.strip()}"}
-        try:
-            print(f"[Vault] Requesting HF embeddings for {len(texts)} chunks...")
-            res = requests.post(url, headers=headers, json={"inputs": texts, "options": {"wait_for_model": True}}, timeout=30)
-            res.raise_for_status()
-            embeddings = res.json()
-            if not isinstance(embeddings, list) or not all(isinstance(x, list) for x in embeddings):
-                raise ValueError(f"Unexpected HF response: {embeddings}")
-            return embeddings
-        except Exception as e:
-            print(f"[Vault] HF API Error: {type(e).__name__}: {e}")
-            raise RuntimeError(f"HF API Failed: {e}")
+    if gemini_key:
+        from chromadb.utils.embedding_functions import GoogleGenerativeAiEmbeddingFunction
+        embed_fn = GoogleGenerativeAiEmbeddingFunction(
+            api_key=gemini_key,
+            model_name="models/text-embedding-004"
+        )
+        return [list(e) for e in embed_fn(texts)]
     else:
         from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
         embed_fn = DefaultEmbeddingFunction()
