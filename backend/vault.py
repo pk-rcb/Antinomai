@@ -78,53 +78,13 @@ def _get_chroma_collection():
         import chromadb
         import os
 
-        gemini_key = os.environ.get("GEMINI_API_KEY")
-        if gemini_key:
-            import requests as _requests
-            from chromadb.api.types import Documents, EmbeddingFunction, Embeddings
-
-            class GeminiRESTEmbeddingFunction(EmbeddingFunction):
-                """Call Google Gemini embedding API directly via REST with batching."""
-                _URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents"
-
-                def __init__(self, api_key: str):
-                    self._api_key = api_key
-                    self._batch_size = 100
-
-                def __call__(self, input: Documents) -> Embeddings:
-                    import time
-                    all_embeddings = []
-                    for i in range(0, len(input), self._batch_size):
-                        batch = input[i:i + self._batch_size]
-                        requests_payload = [
-                            {
-                                "model": "models/gemini-embedding-001",
-                                "content": {"parts": [{"text": t}]},
-                                "outputDimensionality": 768
-                            }
-                            for t in batch
-                        ]
-                        resp = _requests.post(
-                            self._URL,
-                            params={"key": self._api_key},
-                            json={"requests": requests_payload},
-                            timeout=30,
-                        )
-                        if resp.status_code == 429:
-                            print("[Vault] 429 Too Many Requests, sleeping for 15s...")
-                            time.sleep(15)
-                            resp = _requests.post(
-                                self._URL,
-                                params={"key": self._api_key},
-                                json={"requests": requests_payload},
-                                timeout=30,
-                            )
-                        resp.raise_for_status()
-                        for emb in resp.json().get("embeddings", []):
-                            all_embeddings.append(emb["values"])
-                    return all_embeddings
-
-            embed_fn = GeminiRESTEmbeddingFunction(api_key=gemini_key)
+        cohere_key = os.environ.get("COHERE_API_KEY")
+        if cohere_key:
+            from chromadb.utils.embedding_functions import CohereEmbeddingFunction
+            embed_fn = CohereEmbeddingFunction(
+                api_key=cohere_key,
+                model_name="embed-english-v3.0"
+            )
         else:
             from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
             embed_fn = DefaultEmbeddingFunction()
@@ -152,8 +112,8 @@ def _get_qdrant_collection():
         from qdrant_client import QdrantClient
         from qdrant_client.models import Distance, VectorParams
 
-        # Gemini text-embedding-004 = 768 dims; local ONNX all-MiniLM = 384 dims
-        vec_size = 768 if os.environ.get("GEMINI_API_KEY") else 384
+        # Cohere embed-english-v3.0 = 1024 dims; local ONNX all-MiniLM = 384 dims
+        vec_size = 1024 if os.environ.get("COHERE_API_KEY") else 384
 
         url     = os.environ["QDRANT_URL"]
         api_key = os.environ.get("QDRANT_API_KEY")
@@ -181,48 +141,22 @@ def _get_qdrant_collection():
 
 
 def _embed_texts(texts: list[str]) -> list[list[float]]:
-    """Embed using Google Gemini REST API (if key provided) or fallback to local ONNX."""
+    """Embed using Cohere API (if key provided) or fallback to local ONNX."""
     import os
-    gemini_key = os.environ.get("GEMINI_API_KEY")
+    cohere_key = os.environ.get("COHERE_API_KEY")
 
-    if gemini_key:
-        import requests
-        import time
-        url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:batchEmbedContents"
-        all_embeddings = []
-        batch_size = 100
+    if cohere_key:
+        import cohere
+        co = cohere.Client(api_key=cohere_key)
         
-        for i in range(0, len(texts), batch_size):
-            batch = texts[i:i + batch_size]
-            requests_payload = [
-                {
-                    "model": "models/gemini-embedding-001",
-                    "content": {"parts": [{"text": t}]},
-                    "outputDimensionality": 768
-                }
-                for t in batch
-            ]
-            
-            resp = requests.post(
-                url,
-                params={"key": gemini_key},
-                json={"requests": requests_payload},
-                timeout=30,
-            )
-            if resp.status_code == 429:
-                print("[Vault] 429 Too Many Requests, sleeping for 15s...")
-                time.sleep(15)
-                resp = requests.post(
-                    url,
-                    params={"key": gemini_key},
-                    json={"requests": requests_payload},
-                    timeout=30,
-                )
-            resp.raise_for_status()
-            for emb in resp.json().get("embeddings", []):
-                all_embeddings.append(emb["values"])
-                
-        return all_embeddings
+        # Cohere supports embedding batches directly. 
+        # Their library automatically handles batching appropriately.
+        response = co.embed(
+            texts=texts,
+            model="embed-english-v3.0",
+            input_type="search_document"
+        )
+        return response.embeddings
     else:
         from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
         embed_fn = DefaultEmbeddingFunction()
