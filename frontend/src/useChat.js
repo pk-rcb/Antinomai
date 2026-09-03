@@ -11,7 +11,7 @@ export function useChat() {
   const [sentimentCheck,  setSentimentCheck]   = useState(false)
   const sessionId = useRef(Math.random().toString(36).slice(2, 10))
 
-  // Poll health on mount
+  // Poll health on mount and clear previous session data on refresh
   useEffect(() => {
     const check = async () => {
       try {
@@ -22,6 +22,10 @@ export function useChat() {
         setHealth({ status: 'Cannot reach backend', primary_model: null, vision_model: null })
       }
     }
+    
+    // Wipe backend vault on refresh/startup
+    fetch(`${API}/api/clear?session_id=${sessionId.current}`, { method: 'DELETE' }).catch(console.error)
+    
     check()
     const id = setInterval(check, 30_000)
     return () => clearInterval(id)

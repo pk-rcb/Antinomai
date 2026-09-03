@@ -219,6 +219,21 @@ async def vault_delete_doc(doc_id: str):
         raise HTTPException(500, str(e))
 
 
+@app.delete("/api/clear")
+async def clear_session(session_id: Optional[str] = None):
+    """Clear session data and completely wipe the vault for a fresh session."""
+    if session_id and session_id in _SESSION_IMAGES:
+        del _SESSION_IMAGES[session_id]
+        
+    from backend.vault import clear_vault
+    try:
+        clear_vault()
+        return {"ok": True, "message": "Vault and session cleared"}
+    except Exception as e:
+        print(f"[Clear] Error clearing vault: {e}")
+        raise HTTPException(500, str(e))
+
+
 class VaultSearchRequest(BaseModel):
     query:         str
     ticker_filter: Optional[str] = None

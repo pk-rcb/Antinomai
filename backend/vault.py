@@ -457,3 +457,28 @@ def vault_doc_count() -> int:
         return len(list_documents())
     except Exception:
         return 0
+
+# ── Core: clear ───────────────────────────────────────────────────────────────
+def clear_vault():
+    """Delete and recreate the entire vault collection to clear all documents."""
+    if _use_qdrant():
+        _clear_vault_qdrant()
+    else:
+        _clear_vault_chroma()
+
+def _clear_vault_chroma():
+    import chromadb
+    client = chromadb.PersistentClient(path="./chroma_db")
+    try:
+        client.delete_collection(COLLECTION_NAME)
+    except:
+        pass
+    _get_chroma_collection()
+
+def _clear_vault_qdrant():
+    global _qdrant_collection
+    client, col = _get_qdrant_collection()
+    client.delete_collection(col)
+    _qdrant_collection = None
+    _get_qdrant_collection()
+
