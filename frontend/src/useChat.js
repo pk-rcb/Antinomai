@@ -124,5 +124,5 @@ export function useChat() {
     await fetch(`${API}/api/clear?session_id=${sessionId.current}`, { method: 'DELETE' })
   }, [])
 
-  return { messages, streaming, portfolio, lastRoute, health, sentimentCheck, setSentimentCheck, sendMessage, clearChat }
+  return { messages, streaming, portfolio, lastRoute, health, sentimentCheck, setSentimentCheck, sendMessage, clearChat, sessionId: sessionId.current }
 }

@@ -19,7 +19,16 @@ const ROUTE_COLORS = {
   research:    '#f97316',
 }
 
-export default function Sidebar({ sentimentCheck, onToggleSentiment, onClear, lastRoute, health, collapsed, onToggleCollapse }) {
+export default function Sidebar({
+  health,
+  lastRoute,
+  onClear,
+  sentimentCheck,
+  onToggleSentiment,
+  collapsed,
+  onToggleCollapse,
+  sessionId,
+}) {
   const isOk = health.status === 'ok'
 
   return (
@@ -127,7 +136,9 @@ export default function Sidebar({ sentimentCheck, onToggleSentiment, onClear, la
 
         <div className="sidebar-spacer" />
 
-        <VaultPanel />
+        <div className="sidebar-group-content">
+          <VaultPanel sessionId={sessionId} />
+        </div>
 
         <div className="sidebar-footer">
           LangGraph · Groq · Tavily · ChromaDB

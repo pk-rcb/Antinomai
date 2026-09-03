@@ -33,6 +33,7 @@ class ApplicationState(TypedDict):
     user_input_type:       str
     portfolio_report:      str
     enable_sentiment_check: bool
+    session_id:            str
 
 
 class IntentRoute(BaseModel):

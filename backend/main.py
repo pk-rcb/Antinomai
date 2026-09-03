@@ -102,8 +102,15 @@ async def upload_chart(session_id: str, file: UploadFile = File(...)):
 
 @app.delete("/api/clear")
 async def clear_session(session_id: str):
+    """Clear session data and completely wipe the vault for a fresh session."""
     _SESSION_IMAGES.pop(session_id, None)
-    return {"ok": True}
+    from backend.vault import clear_vault
+    try:
+        clear_vault(session_id=session_id)
+        return {"ok": True, "message": "Vault and session cleared"}
+    except Exception as e:
+        print(f"[Clear] Error clearing vault: {e}")
+        raise HTTPException(500, str(e))
 
 
 @app.post("/api/transcribe")
@@ -134,6 +141,7 @@ class VaultIngestTextRequest(BaseModel):
 
 @app.post("/api/vault/ingest")
 async def vault_ingest(
+    session_id: str,
     ticker:   Optional[str] = None,
     doc_type: str = "other",
     file:     Optional[UploadFile] = File(None),
@@ -150,7 +158,7 @@ async def vault_ingest(
         raise HTTPException(400, f"Unsupported file type: {file.content_type}. Use PDF, TXT, or MD.")
     try:
         data   = await file.read()
-        doc_id = ingest_file(data=data, filename=file.filename or "document", ticker=ticker or None, doc_type=doc_type)
+        doc_id = ingest_file(data=data, filename=file.filename or "document", ticker=ticker or None, doc_type=doc_type, session_id=session_id)
         return {"ok": True, "doc_id": doc_id, "filename": file.filename}
     except ValueError as e:
         raise HTTPException(422, str(e))
@@ -160,7 +168,7 @@ async def vault_ingest(
 
 
 @app.post("/api/vault/ingest-text")
-async def vault_ingest_text(req: VaultIngestTextRequest):
+async def vault_ingest_text(req: VaultIngestTextRequest, session_id: str):
     """Ingest plain text directly (no file upload) into the Research Vault."""
     from backend.vault import ingest_text
     try:
@@ -169,6 +177,7 @@ async def vault_ingest_text(req: VaultIngestTextRequest):
             source_name=req.source_name,
             ticker=req.ticker,
             doc_type=req.doc_type,
+            session_id=session_id,
         )
         return {"ok": True, "doc_id": doc_id}
     except ValueError as e:
@@ -179,11 +188,11 @@ async def vault_ingest_text(req: VaultIngestTextRequest):
 
 
 @app.get("/api/vault/docs")
-async def vault_list_docs():
-    """Return all documents in the Research Vault (one entry per document, not per chunk)."""
+async def vault_list_docs(session_id: str):
+    """Return all documents in the Research Vault for a specific session."""
     from backend.vault import list_documents
     try:
-        docs = list_documents()
+        docs = list_documents(session_id=session_id)
         return {
             "docs": [
                 {
@@ -241,11 +250,11 @@ class VaultSearchRequest(BaseModel):
 
 
 @app.post("/api/vault/search")
-async def vault_search(req: VaultSearchRequest):
+async def vault_search(req: VaultSearchRequest, session_id: str):
     """Semantic search over the vault — useful for UI preview and debugging."""
     from backend.vault import retrieve
     try:
-        chunks = retrieve(query=req.query, ticker_filter=req.ticker_filter, n_results=req.n_results)
+        chunks = retrieve(query=req.query, ticker_filter=req.ticker_filter, n_results=req.n_results, session_id=session_id)
         return {
             "results": [
                 {
@@ -298,6 +307,7 @@ async def chat(req: ChatRequest):
         "user_input_type":        "",
         "portfolio_report":       "",
         "enable_sentiment_check": req.enable_sentiment_check,
+        "session_id":             session_id,
     }
 
     thread_id = f"ant_{session_id}_{uuid.uuid4().hex[:8]}"

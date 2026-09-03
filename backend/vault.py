@@ -200,6 +200,7 @@ def _ingest_chunks(
     ticker:     Optional[str],
     doc_type:   str,
     date_added: str,
+    session_id: str,
 ):
     """Low-level: embed and store chunks into the active vector store."""
     if not chunks:
@@ -213,6 +214,7 @@ def _ingest_chunks(
             "doc_type":   doc_type,
             "date_added": date_added,
             "doc_id":     doc_id,
+            "session_id": session_id,
         }
         for _ in chunks
     ]
@@ -242,6 +244,7 @@ def ingest_text(
     source_name: str,
     ticker:      Optional[str] = None,
     doc_type:    str = "other",
+    session_id:  str = "default",
 ) -> str:
     """Chunk, embed, and store plain text. Returns the doc_id."""
     if doc_type not in VALID_DOC_TYPES:
@@ -254,7 +257,7 @@ def ingest_text(
     if not chunks:
         raise ValueError("Document produced zero chunks after splitting.")
 
-    _ingest_chunks(chunks, doc_id, source_name, ticker, doc_type, date_added)
+    _ingest_chunks(chunks, doc_id, source_name, ticker, doc_type, date_added, session_id)
     return doc_id
 
 
@@ -263,6 +266,7 @@ def ingest_file(
     filename: str,
     ticker:   Optional[str] = None,
     doc_type: str = "other",
+    session_id: str = "default",
 ) -> str:
     """
     Ingest a PDF or TXT/MD file from raw bytes.
@@ -279,7 +283,7 @@ def ingest_file(
     if not text.strip():
         raise ValueError("File produced no extractable text.")
 
-    return ingest_text(text, source_name=filename, ticker=ticker, doc_type=doc_type)
+    return ingest_text(text, source_name=filename, ticker=ticker, doc_type=doc_type, session_id=session_id)
 
 
 def _extract_pdf_text(data: bytes) -> str:
@@ -296,25 +300,29 @@ def retrieve(
     query:         str,
     ticker_filter: Optional[str] = None,
     n_results:     int = 5,
+    session_id:    str = "default",
 ) -> list[VaultChunk]:
     """
     Semantic search over the vault.
-    Optionally filters by ticker metadata.
+    Optionally filters by ticker metadata and restricts to session_id.
     Returns up to n_results VaultChunk objects.
     """
     if _use_qdrant():
-        return _retrieve_qdrant(query, ticker_filter, n_results)
-    return _retrieve_chroma(query, ticker_filter, n_results)
+        return _retrieve_qdrant(query, ticker_filter, n_results, session_id)
+    return _retrieve_chroma(query, ticker_filter, n_results, session_id)
 
 
-def _retrieve_chroma(query: str, ticker_filter: Optional[str], n_results: int) -> list[VaultChunk]:
+def _retrieve_chroma(query: str, ticker_filter: Optional[str], n_results: int, session_id: str) -> list[VaultChunk]:
     col   = _get_chroma_collection()
     total = col.count()
     if total == 0:
         return []
 
     safe_n  = min(n_results, total)
-    where   = {"ticker": ticker_filter} if ticker_filter else None
+    where   = {"session_id": session_id}
+    if ticker_filter:
+        where = {"$and": [{"session_id": session_id}, {"ticker": ticker_filter}]}
+
     results = col.query(
         query_texts=[query],
         n_results=safe_n,
@@ -335,15 +343,16 @@ def _retrieve_chroma(query: str, ticker_filter: Optional[str], n_results: int) -
     return chunks
 
 
-def _retrieve_qdrant(query: str, ticker_filter: Optional[str], n_results: int) -> list[VaultChunk]:
+def _retrieve_qdrant(query: str, ticker_filter: Optional[str], n_results: int, session_id: str) -> list[VaultChunk]:
     from qdrant_client.models import Filter, FieldCondition, MatchValue
     client, col = _get_qdrant_collection()
     embeddings  = _embed_texts([query])
-    qfilter     = None
+    
+    must_conditions = [FieldCondition(key="session_id", match=MatchValue(value=session_id))]
     if ticker_filter:
-        qfilter = Filter(
-            must=[FieldCondition(key="ticker", match=MatchValue(value=ticker_filter))]
-        )
+        must_conditions.append(FieldCondition(key="ticker", match=MatchValue(value=ticker_filter)))
+        
+    qfilter = Filter(must=must_conditions)
 
     response = client.query_points(
         collection_name=col,
@@ -368,20 +377,20 @@ def _retrieve_qdrant(query: str, ticker_filter: Optional[str], n_results: int) -
 
 
 # ── Core: list documents ──────────────────────────────────────────────────────
-def list_documents() -> list[DocMeta]:
+def list_documents(session_id: str = "default") -> list[DocMeta]:
     """Return one DocMeta per unique doc_id (collapses chunks into parent docs)."""
     if _use_qdrant():
-        return _list_documents_qdrant()
-    return _list_documents_chroma()
+        return _list_documents_qdrant(session_id)
+    return _list_documents_chroma(session_id)
 
 
-def _list_documents_chroma() -> list[DocMeta]:
+def _list_documents_chroma(session_id: str) -> list[DocMeta]:
     col   = _get_chroma_collection()
     total = col.count()
     if total == 0:
         return []
 
-    all_meta = col.get(include=["metadatas"])["metadatas"]
+    all_meta = col.get(where={"session_id": session_id}, include=["metadatas"])["metadatas"]
     seen: dict[str, DocMeta] = {}
     for meta in all_meta:
         doc_id = meta.get("doc_id", "unknown")
@@ -399,9 +408,15 @@ def _list_documents_chroma() -> list[DocMeta]:
     return sorted(seen.values(), key=lambda d: d.date_added, reverse=True)
 
 
-def _list_documents_qdrant() -> list[DocMeta]:
+def _list_documents_qdrant(session_id: str) -> list[DocMeta]:
+    from qdrant_client.models import Filter, FieldCondition, MatchValue
     client, col = _get_qdrant_collection()
-    results, _  = client.scroll(collection_name=col, limit=10_000, with_payload=True)
+    results, _  = client.scroll(
+        collection_name=col, 
+        limit=10_000, 
+        with_payload=True,
+        scroll_filter=Filter(must=[FieldCondition(key="session_id", match=MatchValue(value=session_id))])
+    )
     seen: dict[str, DocMeta] = {}
     for point in results:
         p      = point.payload or {}
@@ -451,34 +466,35 @@ def _delete_document_qdrant(doc_id: str) -> bool:
 
 
 # ── Utility ────────────────────────────────────────────────────────────────────
-def vault_doc_count() -> int:
+def vault_doc_count(session_id: str = "default") -> int:
     """Fast count of unique documents in the vault (not chunks)."""
     try:
-        return len(list_documents())
+        return len(list_documents(session_id=session_id))
     except Exception:
         return 0
 
 # ── Core: clear ───────────────────────────────────────────────────────────────
-def clear_vault():
-    """Delete and recreate the entire vault collection to clear all documents."""
+def clear_vault(session_id: str = "default"):
+    """Delete all chunks belonging to a specific session."""
     if _use_qdrant():
-        _clear_vault_qdrant()
+        _clear_vault_qdrant(session_id)
     else:
-        _clear_vault_chroma()
+        _clear_vault_chroma(session_id)
 
-def _clear_vault_chroma():
-    import chromadb
-    client = chromadb.PersistentClient(path="./chroma_db")
-    try:
-        client.delete_collection(COLLECTION_NAME)
-    except:
-        pass
-    _get_chroma_collection()
+def _clear_vault_chroma(session_id: str):
+    col = _get_chroma_collection()
+    results = col.get(where={"session_id": session_id}, include=[])
+    ids = results.get("ids", [])
+    if ids:
+        col.delete(ids=ids)
 
-def _clear_vault_qdrant():
-    global _qdrant_collection
+def _clear_vault_qdrant(session_id: str):
+    from qdrant_client.models import Filter, FieldCondition, MatchValue
     client, col = _get_qdrant_collection()
-    client.delete_collection(col)
-    _qdrant_collection = None
-    _get_qdrant_collection()
+    client.delete(
+        collection_name=col,
+        points_selector=Filter(
+            must=[FieldCondition(key="session_id", match=MatchValue(value=session_id))]
+        ),
+    )
 

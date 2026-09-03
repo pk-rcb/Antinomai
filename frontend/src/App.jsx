@@ -13,7 +13,7 @@ export default function App() {
   const {
     messages, streaming, portfolio,
     lastRoute, health, sentimentCheck,
-    setSentimentCheck, sendMessage, clearChat,
+    setSentimentCheck, sendMessage, clearChat, sessionId
   } = useChat()
 
   return (
@@ -26,6 +26,7 @@ export default function App() {
           onClear={clearChat}
           lastRoute={lastRoute}
           health={health}
+          sessionId={sessionId}
           collapsed={sidebarCollapsed}
           onToggleCollapse={() => setSidebarCollapsed(v => !v)}
         />

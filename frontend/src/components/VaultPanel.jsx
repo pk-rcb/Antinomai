@@ -19,7 +19,7 @@ const DOC_TYPE_ICONS = {
   other:          '📄',
 }
 
-export default function VaultPanel() {
+export default function VaultPanel({ sessionId }) {
   const [open,        setOpen]        = useState(false)
   const [docs,        setDocs]        = useState([])
   const [loading,     setLoading]     = useState(false)
@@ -38,7 +38,8 @@ export default function VaultPanel() {
   const fetchDocs = useCallback(async () => {
     setLoading(true)
     try {
-      const res  = await fetch(`${API}/api/vault/docs`)
+      const qs = sessionId ? `?session_id=${sessionId}` : ''
+      const res  = await fetch(`${API}/api/vault/docs${qs}`)
       const data = await res.json()
       setDocs(data.docs ?? [])
     } catch {
@@ -76,6 +77,7 @@ export default function VaultPanel() {
       const params = new URLSearchParams()
       if (ticker.trim()) params.set('ticker', ticker.trim().toUpperCase())
       params.set('doc_type', docType)
+      if (sessionId) params.set('session_id', sessionId)
 
       const res  = await fetch(`${API}/api/vault/ingest?${params}`, { method: 'POST', body: fd })
       const data = await res.json()
@@ -98,7 +100,12 @@ export default function VaultPanel() {
     }
     setUploading(true)
     try {
-      const res  = await fetch(`${API}/api/vault/ingest-text`, {
+      const params = new URLSearchParams()
+      if (ticker.trim()) params.set('ticker', ticker.trim().toUpperCase())
+      params.set('doc_type', docType)
+      if (sessionId) params.set('session_id', sessionId)
+
+      const res  = await fetch(`${API}/api/vault/ingest-text?${params}`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({

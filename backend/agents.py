@@ -485,7 +485,8 @@ def research_node(state: ApplicationState):
         query = raw
 
     # Check if vault has anything at all
-    doc_count = vault_doc_count()
+    session_id = state.get("session_id", "default")
+    doc_count = vault_doc_count(session_id=session_id)
     if doc_count == 0:
         empty_msg = (
             "**🗂️ Research Vault is empty.**\n\n"
@@ -513,9 +514,9 @@ def research_node(state: ApplicationState):
         pass
 
     # Retrieve relevant chunks (try ticker-filtered first, fall back to global)
-    chunks = retrieve(query=query, ticker_filter=ticker_hint, n_results=6)
+    chunks = retrieve(query=query, ticker_filter=ticker_hint, n_results=6, session_id=session_id)
     if not chunks and ticker_hint:
-        chunks = retrieve(query=query, ticker_filter=None, n_results=6)
+        chunks = retrieve(query=query, ticker_filter=None, n_results=6, session_id=session_id)
 
     if not chunks:
         no_match_msg = (
