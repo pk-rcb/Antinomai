@@ -80,22 +80,31 @@ def _get_chroma_collection():
 
         gemini_key = os.environ.get("GEMINI_API_KEY")
         if gemini_key:
-            import google.generativeai as genai
+            import requests as _requests
             from chromadb.api.types import Documents, EmbeddingFunction, Embeddings
-            
-            class CustomGeminiEmbeddingFunction(EmbeddingFunction):
+
+            class GeminiRESTEmbeddingFunction(EmbeddingFunction):
+                """Call Google Gemini embedding API directly via REST."""
+                _URL = "https://generativelanguage.googleapis.com/v1/models/text-embedding-004:embedContent"
+
                 def __init__(self, api_key: str):
-                    genai.configure(api_key=api_key)
-                
-                def __call__(self, input: Documents) -> Embeddings:
-                    result = genai.embed_content(
-                        model="models/text-embedding-004",
-                        content=input,
-                        task_type="retrieval_document"
+                    self._api_key = api_key
+
+                def _embed_one(self, text: str) -> list[float]:
+                    resp = _requests.post(
+                        self._URL,
+                        params={"key": self._api_key},
+                        json={"model": "models/text-embedding-004",
+                              "content": {"parts": [{"text": text}]}},
+                        timeout=30,
                     )
-                    return result['embedding']
-                    
-            embed_fn = CustomGeminiEmbeddingFunction(api_key=gemini_key)
+                    resp.raise_for_status()
+                    return resp.json()["embedding"]["values"]
+
+                def __call__(self, input: Documents) -> Embeddings:
+                    return [self._embed_one(t) for t in input]
+
+            embed_fn = GeminiRESTEmbeddingFunction(api_key=gemini_key)
         else:
             from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
             embed_fn = DefaultEmbeddingFunction()
@@ -123,35 +132,54 @@ def _get_qdrant_collection():
         from qdrant_client import QdrantClient
         from qdrant_client.models import Distance, VectorParams
 
+        # Gemini text-embedding-004 = 768 dims; local ONNX all-MiniLM = 384 dims
+        vec_size = 768 if os.environ.get("GEMINI_API_KEY") else 384
+
         url     = os.environ["QDRANT_URL"]
         api_key = os.environ.get("QDRANT_API_KEY")
         _qdrant_client = QdrantClient(url=url, api_key=api_key)
 
         existing = [c.name for c in _qdrant_client.get_collections().collections]
-        if COLLECTION_NAME not in existing:
+        if COLLECTION_NAME in existing:
+            info = _qdrant_client.get_collection(COLLECTION_NAME)
+            current_size = info.config.params.vectors.size
+            if current_size != vec_size:
+                print(f"[Vault] Recreating Qdrant collection (dim {current_size} → {vec_size})")
+                _qdrant_client.delete_collection(COLLECTION_NAME)
+                _qdrant_client.create_collection(
+                    collection_name=COLLECTION_NAME,
+                    vectors_config=VectorParams(size=vec_size, distance=Distance.COSINE),
+                )
+        else:
             _qdrant_client.create_collection(
                 collection_name=COLLECTION_NAME,
-                vectors_config=VectorParams(size=384, distance=Distance.COSINE),
+                vectors_config=VectorParams(size=vec_size, distance=Distance.COSINE),
             )
         _qdrant_collection = COLLECTION_NAME
-        print(f"[Vault] Qdrant collection ready — {COLLECTION_NAME}")
+        print(f"[Vault] Qdrant collection ready — {COLLECTION_NAME} (dim={vec_size})")
     return _qdrant_client, _qdrant_collection
 
 
 def _embed_texts(texts: list[str]) -> list[list[float]]:
-    """Embed using Google Gemini API (if token provided) or fallback to local ONNX."""
+    """Embed using Google Gemini REST API (if key provided) or fallback to local ONNX."""
     import os
     gemini_key = os.environ.get("GEMINI_API_KEY")
-    
+
     if gemini_key:
-        import google.generativeai as genai
-        genai.configure(api_key=gemini_key)
-        result = genai.embed_content(
-            model="models/text-embedding-004",
-            content=texts,
-            task_type="retrieval_document"
-        )
-        return [list(e) for e in result['embedding']]
+        import requests
+        url = "https://generativelanguage.googleapis.com/v1/models/text-embedding-004:embedContent"
+        embeddings = []
+        for text in texts:
+            resp = requests.post(
+                url,
+                params={"key": gemini_key},
+                json={"model": "models/text-embedding-004",
+                      "content": {"parts": [{"text": text}]}},
+                timeout=30,
+            )
+            resp.raise_for_status()
+            embeddings.append(resp.json()["embedding"]["values"])
+        return embeddings
     else:
         from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
         embed_fn = DefaultEmbeddingFunction()
