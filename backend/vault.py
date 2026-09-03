@@ -136,6 +136,19 @@ def _get_qdrant_collection():
                 vectors_config=VectorParams(size=vec_size, distance=Distance.COSINE),
             )
         _qdrant_collection = COLLECTION_NAME
+        
+        # Qdrant Cloud strict mode requires an index to filter by session_id
+        try:
+            from qdrant_client.models import PayloadSchemaType
+            _qdrant_client.create_payload_index(
+                collection_name=COLLECTION_NAME,
+                field_name="session_id",
+                field_schema=PayloadSchemaType.KEYWORD,
+            )
+        except Exception as e:
+            # Might already exist, which is fine
+            pass
+            
         print(f"[Vault] Qdrant collection ready — {COLLECTION_NAME} (dim={vec_size})")
     return _qdrant_client, _qdrant_collection
 
