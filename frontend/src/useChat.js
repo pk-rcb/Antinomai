@@ -15,7 +15,7 @@ export function useChat() {
   useEffect(() => {
     const check = async () => {
       try {
-        const res = await fetch(`${API}/api/health`)
+        const res = await fetch(`${API}/api/health`, { cache: 'no-store' })
         const data = await res.json()
         setHealth(data)
       } catch {
@@ -23,8 +23,12 @@ export function useChat() {
       }
     }
     
-    // Wipe backend vault on refresh/startup
-    fetch(`${API}/api/clear?session_id=${sessionId.current}`, { method: 'DELETE' }).catch(console.error)
+    // Wipe previous session if it exists
+    const lastSession = localStorage.getItem('finrag_last_session')
+    if (lastSession) {
+      fetch(`${API}/api/clear?session_id=${lastSession}`, { method: 'DELETE' }).catch(console.error)
+    }
+    localStorage.setItem('finrag_last_session', sessionId.current)
     
     check()
     const id = setInterval(check, 30_000)
@@ -120,8 +124,12 @@ export function useChat() {
     setMessages([])
     setPortfolio(null)
     setLastRoute(null)
+    
+    const oldSession = sessionId.current
     sessionId.current = Math.random().toString(36).slice(2, 10)
-    await fetch(`${API}/api/clear?session_id=${sessionId.current}`, { method: 'DELETE' })
+    localStorage.setItem('finrag_last_session', sessionId.current)
+    
+    await fetch(`${API}/api/clear?session_id=${oldSession}`, { method: 'DELETE' })
   }, [])
 
   return { messages, streaming, portfolio, lastRoute, health, sentimentCheck, setSentimentCheck, sendMessage, clearChat, sessionId: sessionId.current }

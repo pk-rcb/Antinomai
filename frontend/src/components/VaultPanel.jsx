@@ -39,7 +39,7 @@ export default function VaultPanel({ sessionId }) {
     setLoading(true)
     try {
       const qs = sessionId ? `?session_id=${sessionId}` : ''
-      const res  = await fetch(`${API}/api/vault/docs${qs}`)
+      const res  = await fetch(`${API}/api/vault/docs${qs}`, { cache: 'no-store' })
       const data = await res.json()
       setDocs(data.docs ?? [])
     } catch {
@@ -47,7 +47,7 @@ export default function VaultPanel({ sessionId }) {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [sessionId])
 
   useEffect(() => {
     if (open) fetchDocs()
