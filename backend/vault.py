@@ -231,7 +231,7 @@ def _ingest_chunks(
             )
             for chunk_id, emb, meta, chunk in zip(ids, embeddings, metadatas, chunks)
         ]
-        client.upsert(collection_name=col, points=points)
+        client.upsert(collection_name=col, points=points, wait=True)
     else:
         col = _get_chroma_collection()
         col.add(documents=chunks, ids=ids, metadatas=metadatas)
@@ -413,7 +413,7 @@ def _list_documents_qdrant(session_id: str) -> list[DocMeta]:
     client, col = _get_qdrant_collection()
     results, _  = client.scroll(
         collection_name=col, 
-        limit=10_000, 
+        limit=1000, 
         with_payload=True,
         scroll_filter=Filter(must=[FieldCondition(key="session_id", match=MatchValue(value=session_id))])
     )

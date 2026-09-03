@@ -38,7 +38,7 @@ export default function VaultPanel({ sessionId }) {
   const fetchDocs = useCallback(async () => {
     setLoading(true)
     try {
-      const qs = sessionId ? `?session_id=${sessionId}` : ''
+      const qs = sessionId ? `?session_id=${sessionId}&_t=${Date.now()}` : `?_t=${Date.now()}`
       const res  = await fetch(`${API}/api/vault/docs${qs}`, { cache: 'no-store' })
       const data = await res.json()
       setDocs(data.docs ?? [])
@@ -84,7 +84,7 @@ export default function VaultPanel({ sessionId }) {
       if (!res.ok) throw new Error(data.detail ?? 'Upload failed')
       showFeedback('ok', `✅ Ingested: ${data.filename}`)
       setTicker('')
-      await fetchDocs()
+      setTimeout(() => fetchDocs(), 800) // Give Qdrant replicas time to sync
     } catch (e) {
       showFeedback('err', `❌ ${e.message}`)
     } finally {
@@ -121,7 +121,7 @@ export default function VaultPanel({ sessionId }) {
       setPasteText('')
       setSourceName('')
       setTicker('')
-      await fetchDocs()
+      setTimeout(() => fetchDocs(), 500)
     } catch (e) {
       showFeedback('err', `❌ ${e.message}`)
     } finally {
