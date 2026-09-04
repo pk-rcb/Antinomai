@@ -228,15 +228,6 @@
 
 /* Responsive: on mobile, sidebar is an overlay */
 @media (max-width: 768px) {
-  .sidebar-toggle-btn {
-    left: 0;
-    top: 16px;
-    transform: none;
-    position: fixed;
-    border-radius: 0 6px 6px 0;
-  }
-  .sidebar-toggle-btn--collapsed { left: 0; }
-
   .sidebar {
     position: fixed;
     top: 0;
@@ -246,17 +237,26 @@
     box-shadow: 4px 0 24px rgba(0,0,0,0.4);
     transform: translateX(0);
   }
+  
   .sidebar--collapsed {
     transform: translateX(-100%);
     width: 230px;
     min-width: 230px;
     opacity: 1;
     pointer-events: none;
+    box-shadow: none;
   }
 
   .sidebar-toggle-btn {
+    position: fixed;
     top: 50%;
-    transform: translateY(-50%);
+    left: 230px;
+    transform: translate(-50%, -50%);
+    z-index: 201; /* Above sidebar overlay */
+  }
+
+  .sidebar-toggle-btn--collapsed {
     left: 0;
+    transform: translateY(-50%); /* stick to left edge */
   }
 }
