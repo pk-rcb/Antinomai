@@ -11,7 +11,7 @@ export default function ChatInput({ onSend, disabled }) {
 
   const submit = () => {
     const trimmed = text.trim()
-    if (!trimmed || disabled) return
+    if ((!trimmed && !file) || disabled) return
     onSend(trimmed, file ?? undefined)
     setText('')
     setFile(null)
@@ -157,7 +157,7 @@ export default function ChatInput({ onSend, disabled }) {
         <button
           className={`chat-btn-send ${disabled ? '' : 'chat-btn-send--active'}`}
           onClick={submit}
-          disabled={disabled || !text.trim()}
+          disabled={disabled || (!text.trim() && !file)}
         >
           {disabled ? (
             <svg className="spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

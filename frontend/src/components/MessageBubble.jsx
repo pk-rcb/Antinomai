@@ -42,7 +42,10 @@ export default function MessageBubble({ msg, streaming }) {
         )}
         <div className={`bubble-content ${isUser ? 'bubble-content--user' : 'bubble-content--ai'}`}>
           {isUser ? (
-            <p>{msg.content}</p>
+            <>
+              {msg.image && <img src={msg.image} alt="uploaded" className="bubble-image" style={{ maxWidth: '100%', borderRadius: 8, marginBottom: 8 }} />}
+              {msg.content && <p>{msg.content}</p>}
+            </>
           ) : (
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {msg.content}

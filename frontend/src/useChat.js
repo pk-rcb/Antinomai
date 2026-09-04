@@ -45,7 +45,7 @@ export function useChat() {
       await fetch(`${API}/api/upload?session_id=${sessionId.current}`, { method: 'POST', body: fd })
     }
 
-    const userMsg = { role: 'user', content: text }
+    const userMsg = { role: 'user', content: text, image: file ? URL.createObjectURL(file) : null }
     setMessages(prev => [...prev, userMsg])
     setPortfolio(null)
     setStreaming(true)
