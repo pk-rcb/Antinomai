@@ -55,30 +55,14 @@ def _probe_model(model_name: str) -> bool:
 
 def resolve_models() -> tuple[str, str]:
     """
-    Returns (primary_model, vision_model) — first working ones in the chain.
-    Call once at startup.
+    Returns (primary_model, vision_model).
+    Hardcoded to avoid sequential API probing that causes a 5-10s startup delay.
     """
-    primary = None
-    for m in _MODEL_CHAIN_PRIMARY:
-        print(f"[Config] Checking primary model: {m}")
-        if _probe_model(m):
-            primary = m
-            print(f"[Config] ✅ Primary model selected: {m}")
-            break
-
-    vision = None
-    for m in _MODEL_CHAIN_VISION:
-        print(f"[Config] Checking vision model: {m}")
-        if _probe_model(m):
-            vision = m
-            print(f"[Config] ✅ Vision model selected: {m}")
-            break
-
-    if not primary:
-        raise RuntimeError("All Groq primary models are unavailable. Check your GROQ_API_KEY.")
-    if not vision:
-        print("[Config] ⚠️  No vision model available — vision analysis will be disabled.")
-        vision = primary  # graceful degrade: use text model, it will refuse image input
-
+    primary = "openai/gpt-oss-120b"
+    vision = "qwen/qwen3.6-27b"
+    
+    print(f"[Config] ✅ Primary model selected: {primary}")
+    print(f"[Config] ✅ Vision model selected: {vision}")
+    
     return primary, vision
 

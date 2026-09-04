@@ -94,7 +94,6 @@ def vision_node(state: ApplicationState):
     vision_llm = ChatGroq(
         model=get_vision_model(),
         temperature=0.1,
-        model_kwargs={"reasoning_effort": "none"},
     )
     sys_msg = SystemMessage(content="""You are an expert technical stock analyst.
 Analyze the provided stock chart image and respond with:
