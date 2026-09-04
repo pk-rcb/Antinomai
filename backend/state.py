@@ -38,7 +38,7 @@ class ApplicationState(TypedDict):
 
 class IntentRoute(BaseModel):
     destination: str = Field(
-        description="Must be exactly one of: 'debate', 'vision', 'trivia', 'fundamental', 'portfolio', 'research'"
+        description="Must be exactly one of: 'debate', 'vision', 'trivia', 'fundamental', 'portfolio', 'research', 'off_topic'"
     )
 
 

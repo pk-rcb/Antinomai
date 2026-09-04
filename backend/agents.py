@@ -60,8 +60,9 @@ Classify input into EXACTLY ONE category:
   'fundamental' - asking for deep-dive fundamental analysis of one company
   'portfolio'   - providing multiple holdings (2+ stocks with share counts)
   'research'    - asking about uploaded documents, reports, earnings transcripts, filings, or notes in the research vault
+  'off_topic'   - any question completely unrelated to finance, stocks, investing, or the purpose of this platform
 
-Rules: Multiple stocks with shares -> portfolio. Buy/sell question -> debate. Deep analysis -> fundamental. Document/vault/transcript/filing questions -> research.""")
+Rules: Multiple stocks with shares -> portfolio. Buy/sell question -> debate. Deep analysis -> fundamental. Document/vault/transcript/filing questions -> research. Unrelated topics -> off_topic.""")
 
     try:
         decision = router_llm.invoke([system, HumanMessage(content=f"Classify: {user_message}")])
@@ -93,6 +94,12 @@ def trivia_node(state: ApplicationState):
         new_messages.append(final)
 
     return {"messages": new_messages}
+
+
+# ── Off Topic ──────────────────────────────────────────────────────────────────
+def off_topic_node(state: ApplicationState):
+    msg = AIMessage(content="I am a financial AI assistant focused on stock market analysis, portfolio management, and financial research. Please ask me a finance-related question!")
+    return {"messages": list(state["messages"]) + [msg]}
 
 
 # ── Vision ─────────────────────────────────────────────────────────────────────
@@ -580,6 +587,7 @@ def get_app():
         wf.add_node("bear_agent",   bear_agent)
         wf.add_node("judge_agent",  judge_agent)
         wf.add_node("research",     research_node)   # RAG vault route
+        wf.add_node("off_topic",    off_topic_node)
 
         wf.set_entry_point("orchestrator")
         wf.add_conditional_edges("orchestrator", lambda s: s["next_destination"], {
@@ -589,6 +597,7 @@ def get_app():
             "fundamental": "fundamental",
             "portfolio":   "portfolio",
             "research":    "research",
+            "off_topic":   "off_topic",
         })
         wf.add_edge("bull_agent",  "bear_agent")
         wf.add_edge("bear_agent",  "judge_agent")
@@ -598,6 +607,7 @@ def get_app():
         wf.add_edge("fundamental", END)
         wf.add_edge("portfolio",   END)
         wf.add_edge("research",    END)
+        wf.add_edge("off_topic",   END)
 
         _APP_INSTANCE = wf.compile(checkpointer=MemorySaver())
         print("[Graph] LangGraph app compiled successfully.")
