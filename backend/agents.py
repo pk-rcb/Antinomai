@@ -36,13 +36,20 @@ def _tavily():
 # ── Orchestrator ───────────────────────────────────────────────────────────────
 def orchestrator_router(state: ApplicationState):
     raw = state["messages"][-1].content
+    has_image = False
+    
     if isinstance(raw, list):
         user_message = next(
             (p["text"] for p in raw if isinstance(p, dict) and p.get("type") == "text"),
             "analyze chart"
         )
+        has_image = any(isinstance(p, dict) and p.get("type") == "image_url" for p in raw)
     else:
         user_message = raw
+
+    if has_image:
+        print("[Orchestrator] Image detected -> vision")
+        return {"next_destination": "vision", "user_input_type": "vision"}
 
     router_llm = _llm().with_structured_output(IntentRoute)
     system = SystemMessage(content="""You are an intent router for a financial platform.
