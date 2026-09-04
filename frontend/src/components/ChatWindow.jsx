@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react'
 import MessageBubble from './MessageBubble'
 import PortfolioTable from './PortfolioTable'
+import logo from '../assets/logo.jpg'
 import './ChatWindow.css'
 
 export default function ChatWindow({ messages, streaming, portfolio }) {
@@ -15,9 +16,7 @@ export default function ChatWindow({ messages, streaming, portfolio }) {
       {messages.length === 0 && (
         <div className="chat-empty">
           <div className="chat-empty-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
-              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-            </svg>
+            <img src={logo} alt="Logo" style={{ width: '48px', height: '48px', borderRadius: '12px', objectFit: 'cover' }} />
           </div>
           <h2>Antinomai</h2>
           <p>Institutional Multi-Agent Research Platform</p>
